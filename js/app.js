@@ -603,11 +603,97 @@ let currentView = 'board';
 
         function init() {
             try {
-                const overlay = document.getElementById('sync-overlay');
-                if (overlay) overlay.style.display = 'none';
+                // Check File System Access API availability (Chrome only)
+                if (window.showDirectoryPicker) {
+                    // Chrome: show sync overlay for folder selection
+                    const overlay = document.getElementById('sync-overlay');
+                    if (overlay) overlay.style.display = 'flex';
+                    // Wait for user to pick folder (selectRootFolder will call loadStateFromFile + startApp)
+                } else {
+                    // Firefox/Safari: skip overlay, use localStorage directly
+                    const overlay = document.getElementById('sync-overlay');
+                    if (overlay) overlay.style.display = 'none';
+                    loadStateLocal();
+                    startApp();
+                }
             } catch (error) {
                 console.error('Erreur initialisation:', error);
-                showToast('Erreur lors du chargement');
+                // Fallback: hide overlay and use localStorage
+                const overlay = document.getElementById('sync-overlay');
+                if (overlay) overlay.style.display = 'none';
+                loadStateLocal();
+                startApp();
+            }
+        }
+
+        let dirHandle = null;
+        let dataFileHandle = null;
+        let archiveFileHandle = null;
+        let lastModifiedTime = 0;
+
+        async function selectRootFolder() {
+            try {
+                dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+                dataFileHandle = await dirHandle.getFileHandle('kanban-data.json', { create: true });
+                archiveFileHandle = await dirHandle.getFileHandle('kanban-archive.json', { create: true });
+
+                await loadStateFromFile();
+
+                const overlay = document.getElementById('sync-overlay');
+                if (overlay) overlay.style.display = 'none';
+                startApp();
+            } catch (error) {
+                console.error('Erreur sélection dossier:', error);
+                if (error.name === 'AbortError') {
+                    // User cancelled folder picker — fallback to localStorage
+                    const overlay = document.getElementById('sync-overlay');
+                    if (overlay) overlay.style.display = 'none';
+                    loadStateLocal();
+                    startApp();
+                } else {
+                    showToast('Erreur: ' + error.message);
+                    // Fallback to localStorage on any error
+                    const overlay = document.getElementById('sync-overlay');
+                    if (overlay) overlay.style.display = 'none';
+                    loadStateLocal();
+                    startApp();
+                }
+            }
+        }
+
+        async function loadStateFromFile() {
+            try {
+                const dataFile = await dataFileHandle.getFile();
+                lastModifiedTime = dataFile.lastModified;
+                const dataText = await dataFile.text();
+                if (dataText) {
+                    const parsed = safeJsonParse(dataText, null);
+                    if (parsed && parsed.version === DATA_VERSION) {
+                        state = parsed;
+                        migrateLegacyColumns();
+                    } else if (parsed) {
+                        state = migrateData(parsed);
+                    }
+                }
+                if (state.columns.length === 0) createDefaultColumns();
+
+                // Load archive from file
+                if (archiveFileHandle) {
+                    try {
+                        const archiveFile = await archiveFileHandle.getFile();
+                        const archiveText = await archiveFile.text();
+                        if (archiveText) {
+                            archive = safeJsonParse(archiveText, []);
+                        }
+                    } catch (archiveErr) {
+                        console.error('Erreur lecture archive:', archiveErr);
+                        archive = [];
+                    }
+                }
+                saveArchive();
+            } catch (error) {
+                console.error('Erreur lecture fichier:', error);
+                createDefaultColumns();
             }
         }
 
@@ -871,7 +957,7 @@ let currentView = 'board';
             };
         }
 
-        // ioQueue removed
+        let ioQueue = Promise.resolve();
 
         function saveState() {
             try {
@@ -883,6 +969,29 @@ let currentView = 'board';
                 if (error.name === 'QuotaExceededError') {
                     showToast('Stockage localStorage plein');
                 }
+            }
+            // Also save to file if File System Access is connected
+            if (dataFileHandle) {
+                try {
+                    ioQueue = ioQueue.then(async () => {
+                        const stateCopy = JSON.stringify(state, null, 2);
+                        const writable = await dataFileHandle.createWritable();
+                        await writable.write(stateCopy);
+                        await writable.close();
+                        const archiveCopy = JSON.stringify(archive, null, 2);
+                        const writableA = await archiveFileHandle.createWritable();
+                        await writableA.write(archiveCopy);
+                        await writableA.close();
+                        const newFile = await dataFileHandle.getFile();
+                        lastModifiedTime = newFile.lastModified;
+                    }).catch(err => {
+                        console.error('File write error:', err);
+                        if (err.name === 'NotAllowedError' || err.name === 'NotFoundError') {
+                            dataFileHandle = null;
+                            archiveFileHandle = null;
+                        }
+                    });
+                } catch (_) {}
             }
         }
         function saveArchive() {
@@ -3816,6 +3925,67 @@ let currentView = 'board';
                 if (error.name === 'QuotaExceededError') {
                     showToast('Stockage plein');
                 }
+            }
+            // Also sync with file if File System Access is connected
+            if (dataFileHandle) {
+                ioQueue = ioQueue.then(async () => {
+                    try {
+                        const file = await dataFileHandle.getFile();
+                        if (lastModifiedTime > 0 && file.lastModified > lastModifiedTime + 2000) {
+                            // File was modified externally — reload from file
+                            const pendingTime = {};
+                            Object.keys(activeTimers).forEach(id => {
+                                const timer = activeTimers[id];
+                                if (timer && timer.startTime) {
+                                    pendingTime[id] = Math.floor((Date.now() - timer.startTime) / 1000);
+                                    timer.startTime = Date.now();
+                                }
+                            });
+
+                            const dataText = await file.text();
+                            if (dataText) {
+                                const parsed = safeJsonParse(dataText, null);
+                                if (parsed && parsed.version === DATA_VERSION) {
+                                    state = parsed;
+                                    migrateLegacyColumns();
+                                } else if (parsed) {
+                                    state = migrateData(parsed);
+                                }
+                            }
+                            lastModifiedTime = file.lastModified;
+
+                            // Re-apply running timer time
+                            Object.keys(pendingTime).forEach(id => {
+                                const card = state.cards.find(c => c.id === Number(id));
+                                if (card && pendingTime[id] > 0) {
+                                    card.totalTimeSpent = (card.totalTimeSpent || 0) + pendingTime[id];
+                                }
+                            });
+
+                            renderBoard();
+                            updateStats();
+                            showToast('Synchronisé avec le dossier root');
+                        } else {
+                            // No external changes — just write current state to file
+                            const stateCopy = JSON.stringify(state, null, 2);
+                            const writable = await dataFileHandle.createWritable();
+                            await writable.write(stateCopy);
+                            await writable.close();
+                            const newFile = await dataFileHandle.getFile();
+                            lastModifiedTime = newFile.lastModified;
+                        }
+                    } catch (error) {
+                        console.error('Sync file error:', error);
+                        if (error.name === 'NotAllowedError' || error.name === 'NotFoundError') {
+                            showToast('Connexion au dossier perdue');
+                            dataFileHandle = null;
+                            archiveFileHandle = null;
+                            syncRunningTimers();
+                            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+                            localStorage.setItem(ARCHIVE_KEY, JSON.stringify(archive));
+                        }
+                    }
+                });
             }
         }
         function createModal(title, body, buttons) {

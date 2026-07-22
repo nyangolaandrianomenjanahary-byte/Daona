@@ -4214,3 +4214,59 @@
     font-weight: 600;
     margin-left: 12px;
 }
+
+/* ============================================================
+   CLASSES COMPLÉMENTAIRES — Ajoutées après test global
+   ============================================================ */
+
+/* Calendar visibility toggle */
+.is-visible {
+    display: block;
+}
+
+/* Timer big value — specific state variant */
+.timer-time-big-value {
+    font-size: 22px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.03em;
+    font-family: "SF Mono", SFMono-Regular, ui-monospace, monospace;
+}
+
+.timer-time-big-value.running {
+    color: var(--sys-green);
+}
+
+.timer-time-big-value.paused {
+    color: var(--sys-orange);
+}
+
+/* Error banner */
+.error-banner {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: var(--sys-red);
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    z-index: 10000;
+    display: none;
+}
+
+.error-banner.visible {
+    display: block;
+}
+
+.error-banner button {
+    background: white;
+    color: var(--sys-red);
+    border: none;
+    padding: 8px 16px;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: 12px;
+    font-family: inherit;
+}

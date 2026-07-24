@@ -3,58 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#FBFBFD">
+    <meta name="theme-color" content="#EDECE8">
     <title>VN — Gestion de tâches</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <style>
         /* ============================================================
            APPLE DESIGN SYSTEM — UX/UI CHARTE GRAPHIQUE
            ============================================================ */
         :root {
+            /* === VN INKWELL — DESIGN TOKENS === */
+            /* Palette inspirée du monde de l'écriture : papier, encre, tampon, graphite. */
+            /* Couleur signature : Navy Ink (#2B4570) — pas le bleu Apple générique. */
+
             /* === FONDATIONS === */
-            --bg: #FBFBFD;
-            --bg-alt: #F5F5F7;
-            --ink: #1D1D1F;
-            --ink-soft: #6E6E73;
-            --line: #D2D2D7;
-            --glass: rgba(255, 255, 255, 0.72);
-            --glass-solid: rgba(255, 255, 255, 0.85);
-            
+            --bg: #EDECE8;            /* Desk — papier chaud, pas le blanc froid #FBFBFD */
+            --bg-alt: #E2E0DA;        /* Surface secondaire — comme le verso d'une page */
+            --ink: #1C1D21;           /* Ink — presque noir, légèrement chaud */
+            --ink-soft: #6B6E76;      /* Graphite — texte secondaire, comme trait de crayon */
+            --line: #C8C5BD;          /* Grid line — lignes de papier quadrillé */
+            --glass: rgba(237, 236, 232, 0.72);
+            --glass-solid: rgba(237, 236, 232, 0.85);
+
             /* === COULEURS SYSTÈME === */
-            --blue: #0071E3;
-            --blue-deep: #0059B3;
-            --blue-bg: rgba(0, 113, 227, 0.08);
-            --sys-red: #FF3B30;
-            --sys-red-bg: rgba(255, 59, 48, 0.08);
-            --sys-orange: #FF9500;
-            --sys-orange-bg: rgba(255, 149, 0, 0.08);
-            --sys-yellow: #FFCC00;
-            --sys-green: #34C759;
-            --sys-green-bg: rgba(52, 199, 89, 0.08);
-            --sys-mint: #00C7BE;
-            --sys-teal: #30B0C7;
-            --sys-cyan: #32ADE6;
-            --sys-indigo: #5856D6;
-            --sys-purple: #AF52DE;
-            --sys-pink: #FF2D55;
-            --sys-brown: #A2845E;
-            
-            /* === RAYONS (Apple standard) === */
-            --radius-sm: 10px;
-            --radius: 12px;
-            --radius-lg: 18px;
-            --radius-xl: 22px;
+            --blue: #2B4570;          /* Navy Ink — encre de stylo, accent principal (signature) */
+            --blue-deep: #1D334D;     /* Deep Navy — hover/active states */
+            --blue-bg: rgba(43, 69, 112, 0.08); /* Navy wash */
+            --sys-red: #C73E3A;       /* Stamp Red — sceau rouge d'urgence */
+            --sys-red-bg: rgba(199, 62, 58, 0.08);
+            --sys-orange: #D4883A;    /* Amber Seal — cire d'amber, attention */
+            --sys-orange-bg: rgba(212, 136, 58, 0.08);
+            --sys-yellow: #E2A84F;    /* Gold Ink — encre dorée */
+            --sys-green: #3E8A4E;     /* Check Green — encre verte d'approbation */
+            --sys-green-bg: rgba(62, 138, 78, 0.08);
+            --sys-mint: #2D7A6E;
+            --sys-teal: #2B6A78;
+            --sys-cyan: #3B88C6;
+            --sys-indigo: #3D4F7C;
+            --sys-purple: #7B5EA7;
+            --sys-pink: #B84C6A;
+            --sys-brown: #7A6B52;
+
+            /* === RAYONS === */
+            --radius-sm: 8px;
+            --radius: 10px;
+            --radius-lg: 14px;
+            --radius-xl: 18px;
             --radius-pill: 100px;
-            
-            /* === OMBRES Apple === */
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-            --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.04);
-            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
-            --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 24px rgba(0, 0, 0, 0.08);
-            
+
+            /* === OMBRES — douces, papier === */
+            --shadow-sm: 0 1px 2px rgba(28, 29, 33, 0.06), 0 1px 1px rgba(28, 29, 33, 0.03);
+            --shadow-card: 0 2px 6px rgba(28, 29, 33, 0.08), 0 4px 12px rgba(28, 29, 33, 0.04);
+            --shadow-lg: 0 6px 24px rgba(28, 29, 33, 0.12), 0 2px 6px rgba(28, 29, 33, 0.06);
+            --shadow-modal: 0 16px 48px rgba(28, 29, 33, 0.18), 0 6px 18px rgba(28, 29, 33, 0.10);
+
             /* === ESPACEMENT (grille 8pt) === */
             --space-1: 4px;
             --space-2: 8px;
@@ -65,7 +69,7 @@
             --space-8: 32px;
             --space-10: 40px;
             --space-12: 48px;
-            
+
             /* === MOTION TOKENS === */
             --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
             --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
@@ -78,17 +82,26 @@
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg: #000000;
-                --bg-alt: #1C1C1E;
-                --ink: #F5F5F7;
-                --ink-soft: #98989D;
-                --line: rgba(84, 84, 88, 0.35);
-                --glass: rgba(29, 29, 31, 0.72);
-                --glass-solid: rgba(29, 29, 31, 0.85);
+                --bg: #0F1117;            /* Void — navy-black, pas le pur #000000 */
+                --bg-alt: #1A1D26;        /* Surface sombre — comme un bureau de nuit */
+                --ink: #EDECE8;           /* Paper light — texte sur fond sombre */
+                --ink-soft: #8E9AA0;      /* Mist — secondaire lisible */
+                --line: rgba(107, 110, 118, 0.25);
+                --glass: rgba(15, 17, 23, 0.72);
+                --glass-solid: rgba(15, 17, 23, 0.85);
+                --blue: #5A8FB4;          /* Navy lumineux — encre qui se lit */
+                --blue-deep: #2B4570;
+                --blue-bg: rgba(90, 143, 180, 0.10);
+                --sys-red: #E8645E;       /* Stamp lumineux */
+                --sys-red-bg: rgba(232, 100, 94, 0.10);
+                --sys-orange: #E8A04F;    /* Amber lumineux */
+                --sys-orange-bg: rgba(232, 160, 79, 0.10);
+                --sys-green: #5AAE6E;     /* Check lumineux */
+                --sys-green-bg: rgba(90, 174, 110, 0.10);
                 --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
                 --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
-                --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
-                --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.5);
+                --shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.4);
+                --shadow-modal: 0 16px 48px rgba(0, 0, 0, 0.5);
             }
         }
 
@@ -106,7 +119,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Segoe UI", Helvetica, Arial, sans-serif;
+            font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             background: var(--bg);
             min-height: 100vh;
             color: var(--ink);
@@ -198,12 +211,9 @@
             top: 0;
             z-index: 100;
             background: var(--glass);
-            /* Le header est sticky + toujours visible : on minimise le coût du
-               backdrop-filter. On retire saturate(180%) (double le pipeline de
-               filtre) en gardant le blur qui produit l'effet verre dépoli. */
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--line);
+            border-bottom: 2px solid var(--blue);
             margin: 0 calc(-1 * var(--space-4)) var(--space-4);
             padding: var(--space-4) var(--space-4) var(--space-5);
         }
@@ -221,13 +231,27 @@
             display: flex;
             align-items: center;
             gap: var(--space-3);
+            position: relative;
+        }
+
+        /* Signature : la barre d'encre sous le brand — trait distinctif */
+        .header-brand::after {
+            content: "";
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--blue) 0%, transparent 100%);
+            border-radius: 2px;
+            opacity: 0.6;
         }
 
         .app-icon {
             width: 44px;
             height: 44px;
             border-radius: var(--radius);
-            background: linear-gradient(135deg, #5856D6 0%, #0071E3 100%);
+            background: linear-gradient(135deg, #1D334D 0%, #2B4570 50%, #3D5A80 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -247,8 +271,9 @@
         }
 
         h1 {
-            font-size: 22px;
-            font-weight: 700;
+            font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+            font-size: 26px;
+            font-weight: 800;
             color: var(--ink);
             letter-spacing: -0.02em;
             line-height: 1.2;
@@ -259,6 +284,8 @@
             color: var(--ink-soft);
             font-weight: 400;
             margin-top: 2px;
+            font-style: italic;
+            letter-spacing: 0.02em;
         }
 
         .header-actions {
@@ -332,6 +359,15 @@
                 background: var(--bg-alt);
                 color: var(--ink);
             }
+            .card {
+                background: #1A1D26;
+            }
+            .stat-item {
+                background: #1A1D26;
+            }
+            .calendar-cell {
+                background: #1A1D26;
+            }
         }
 
         .btn-secondary:hover {
@@ -357,9 +393,7 @@
         }
 
         .stat-item {
-            background: var(--glass-solid);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: #FAFAF7;
             border: 1px solid var(--line);
             padding: var(--space-3) var(--space-4);
             border-radius: var(--radius);
@@ -412,6 +446,11 @@
         .stat-completed .stat-number { color: var(--sys-green); }
         .stat-progress .stat-number { color: var(--blue); }
         .stat-overdue .stat-number { color: var(--sys-red); }
+
+        .stat-completed.stat-active { border-color: var(--sys-green); box-shadow: 0 0 0 2px var(--sys-green-bg), var(--shadow-sm); }
+        .stat-progress.stat-active { border-color: var(--blue); box-shadow: 0 0 0 2px var(--blue-bg), var(--shadow-sm); }
+        .stat-overdue.stat-active { border-color: var(--sys-red); box-shadow: 0 0 0 2px var(--sys-red-bg), var(--shadow-sm); }
+        .stat-item.stat-active { border-color: var(--blue); box-shadow: 0 0 0 2px var(--blue-bg), var(--shadow-sm); }
 
         /* ============================================================
            BOARD & COLUMNS — PROFONDEUR
@@ -530,7 +569,7 @@
             font-size: 14px;
             font-weight: 600;
             color: var(--ink);
-            background: white;
+            background: #FAFAF7;
             border: 2px solid var(--blue);
             border-radius: var(--radius-sm);
             padding: var(--space-1) var(--space-2);
@@ -599,7 +638,7 @@
 
         .filter-search-input:focus {
             border-color: var(--blue);
-            background: white;
+            background: #FAFAF7;
         }
 
         .filter-search-input::placeholder {
@@ -745,7 +784,7 @@
            CARDS — CLARTÉ, PROFONDEUR
            ============================================================ */
         .card {
-            background: white;
+            background: #FAFAF7;
             border-radius: var(--radius);
             padding: var(--space-4);
             margin-bottom: var(--space-3);
@@ -808,7 +847,7 @@
         }
 
         .card.deadline-overdue {
-            border-color: rgba(255, 59, 48, 0.3);
+            border-color: rgba(199, 62, 58, 0.3);
             background: linear-gradient(180deg, white 0%, var(--sys-red-bg) 100%);
         }
 
@@ -818,7 +857,7 @@
         }
 
         .card.timer-running {
-            border-color: rgba(52, 199, 89, 0.4);
+            border-color: rgba(62, 138, 78, 0.4);
             box-shadow: 0 0 0 3px var(--sys-green-bg), var(--shadow-card);
         }
 
@@ -1036,12 +1075,12 @@
 
         .badge-priority-medium {
             background: var(--sys-orange-bg);
-            color: #B85E00;
+            color: #8A6E28;
         }
 
         .badge-priority-low {
             background: var(--sys-green-bg);
-            color: #248A3D;
+            color: #2E6A3E;
         }
 
         .badge-category {
@@ -1056,10 +1095,10 @@
             }
 
             /* Camembert : teintes plus chaudes pour le dark mode */
-            .pie-crust  { fill: #B48A4A; stroke: #8C6A33; }
-            .pie-cheese { fill: #E8CC88; }
-            .pie-center { fill: #C9A96E; opacity: 0.45; }
-            .timer-btn-v.timer-btn-v-stop { background: rgba(255,59,48,0.18); color: var(--sys-red); border-color: rgba(255,59,48,0.35); }
+            .pie-crust  { fill: #7A6B52; stroke: #5A5040; }
+            .pie-cheese { fill: #E8DCC0; }
+            .pie-center { fill: #C9B98E; opacity: 0.45; }
+            .timer-btn-v.timer-btn-v-stop { background: rgba(199,62,58,0.18); color: var(--sys-red); border-color: rgba(199,62,58,0.35); }
             .timer-btn-v.timer-btn-v-stop:hover { background: var(--sys-red); color: white; border-color: var(--sys-red); }
             .timer-estimate-label .mini-pie-icon { border-color: #8C6A33; }
         }
@@ -1133,7 +1172,7 @@
         }
         .card-checklist.all-done {
             background: var(--sys-green-bg);
-            color: #248A3D;
+            color: #2E6A3E;
         }
         .card-checklist.all-done .card-checklist-progress-fill { background: var(--sys-green); }
 
@@ -1149,14 +1188,14 @@
             background: var(--sys-green-bg);
             border-radius: var(--radius);
             font-size: 13px;
-            color: #248A3D;
+            color: #2E6A3E;
             font-style: italic;
             cursor: pointer;
             transition: background var(--duration-fast) var(--ease-out);
         }
 
         .card-completion-note:hover {
-            background: rgba(52, 199, 89, 0.15);
+            background: rgba(62, 138, 78, 0.15);
         }
 
         .deadline-alert {
@@ -1221,7 +1260,7 @@
             border-radius: var(--radius);
             min-width: 70px;
             letter-spacing: -0.02em;
-            font-family: "SF Mono", SFMono-Regular, ui-monospace, monospace;
+            font-family: "IBM Plex Mono", "SF Mono", SFMono-Regular, ui-monospace, monospace;
         }
 
         .timer-display.running {
@@ -1261,14 +1300,14 @@
 
         /* La "croute" extérieure du camembert */
         .pie-crust {
-            fill: #C9A96E;
-            stroke: #A8884A;
+            fill: #7A6B52;
+            stroke: #5A5040;
             stroke-width: 1.2;
         }
 
         /* Le "coeur crémeux" (fromage intact = temps restant) */
         .pie-cheese {
-            fill: #FBE8B2;
+            fill: #E8DCC0;
         }
 
         /* La part "mangée" (temps écoulé) */
@@ -1281,13 +1320,13 @@
 
         /* Petit cercle central pour l'effet de profondeur */
         .pie-center {
-            fill: #fff8e0;
+            fill: #F5F0E6;
             opacity: 0.55;
         }
 
         /* Séparateur de parts */
         .pie-divider {
-            stroke: rgba(255,255,255,0.7);
+            stroke: rgba(245,240,230,0.7);
             stroke-width: 1.5;
             stroke-linecap: round;
         }
@@ -1304,20 +1343,20 @@
         }
 
         .pie-indicator-dot {
-            fill: white;
+            fill: #FAFAF7;
             stroke: currentColor;
             stroke-width: 2;
         }
 
         /* Couleurs d'état : la part mangée change de couleur */
-        .timer-visual.state-green  { color: #4A7C2E; }
-        .timer-visual.state-green  .pie-elapsed { fill: #7AB648; }
-        .timer-visual.state-amber  { color: #9B7A00; }
-        .timer-visual.state-amber  .pie-elapsed { fill: #E8B800; }
-        .timer-visual.state-orange { color: #B85E00; }
-        .timer-visual.state-orange .pie-elapsed { fill: #FF9500; }
-        .timer-visual.state-red    { color: #C41C14; }
-        .timer-visual.state-red    .pie-elapsed { fill: #FF3B30; }
+        .timer-visual.state-green  { color: #3E8A4E; }
+        .timer-visual.state-green  .pie-elapsed { fill: #4A9E5E; }
+        .timer-visual.state-amber  { color: #8A6E28; }
+        .timer-visual.state-amber  .pie-elapsed { fill: #D4883A; }
+        .timer-visual.state-orange { color: #A07030; }
+        .timer-visual.state-orange .pie-elapsed { fill: #D4883A; }
+        .timer-visual.state-red    { color: #A03230; }
+        .timer-visual.state-red    .pie-elapsed { fill: #C73E3A; }
         .timer-visual.state-red    .pie-elapsed { animation: pieRedAlert 0.7s ease-in-out infinite alternate; }
 
         @keyframes pieRedAlert {
@@ -1327,11 +1366,11 @@
 
         .timer-visual.state-idle   { color: var(--blue); }
         .timer-visual.state-idle   .pie-elapsed { fill: var(--blue); opacity: 0.4; }
-        .timer-visual.state-paused { color: #B85E00; }
+        .timer-visual.state-paused { color: #8A6E28; }
 
         /* Dépassement : bordure rouge animée */
         .timer-visual.overtime .pie-crust {
-            stroke: #FF3B30;
+            stroke: #C73E3A;
             stroke-width: 2.5;
             animation: crustBlink 0.8s ease-in-out infinite;
         }
@@ -1404,7 +1443,7 @@
             font-weight: 700;
             font-variant-numeric: tabular-nums;
             letter-spacing: -0.03em;
-            font-family: "SF Mono", SFMono-Regular, ui-monospace, monospace;
+            font-family: "IBM Plex Mono", "SF Mono", SFMono-Regular, ui-monospace, monospace;
             line-height: 1;
             white-space: nowrap;
             margin: 0;
@@ -1441,9 +1480,9 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background: conic-gradient(#7AB648 0 70%, #FBE8B2 70% 100%);
+            background: conic-gradient(#4A9E5E 0 70%, #E8DCC0 70% 100%);
             flex-shrink: 0;
-            border: 1px solid #C9A96E;
+            border: 1px solid #7A6B52;
         }
 
         .timer-sub-meta {
@@ -1492,8 +1531,8 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
-        .timer-btn-v.timer-btn-v-play  { background: var(--sys-green); }
-        .timer-btn-v.timer-btn-v-pause { background: var(--sys-orange); }
+        .timer-btn-v.timer-btn-v-play  { background: #3E8A4E; }
+        .timer-btn-v.timer-btn-v-pause { background: #D4883A; }
 
         /* Bouton Stop — petit carré rouge discret à droite sur la ligne du bas */
         .timer-btn-v.timer-btn-v-stop {
@@ -1502,7 +1541,7 @@
             border-radius: 6px;
             background: var(--sys-red-bg);
             color: var(--sys-red);
-            border: 1px solid rgba(255, 59, 48, 0.25);
+            border: 1px solid rgba(199, 62, 58, 0.25);
             font-size: 0;
             opacity: 0.85;
         }
@@ -1524,9 +1563,9 @@
             padding: var(--space-1) var(--space-3) var(--space-1) var(--space-2);
             border-radius: var(--radius-pill);
             font-weight: 600;
-            color: #248A3D;
+            color: #2E6A3E;
             font-size: 13px;
-            border: 1px solid rgba(52, 199, 89, 0.2);
+            border: 1px solid rgba(62, 138, 78, 0.2);
             white-space: nowrap;
             max-width: 100%;
             overflow: hidden;
@@ -1534,7 +1573,7 @@
 
         .timer-indicator-visual.paused-indicator {
             background: var(--sys-orange-bg);
-            color: #B85E00;
+            color: #8A6E28;
             border-color: rgba(255, 149, 0, 0.2);
         }
 
@@ -1557,7 +1596,7 @@
 
         .timer-count-text {
             font-variant-numeric: tabular-nums;
-            font-family: "SF Mono", SFMono-Regular, ui-monospace, monospace;
+            font-family: "IBM Plex Mono", "SF Mono", SFMono-Regular, ui-monospace, monospace;
             font-size: 12px;
             opacity: 0.8;
         }
@@ -1621,9 +1660,11 @@
         }
 
         .modal-title {
+            font-family: "Playfair Display", Georgia, "Times New Roman", serif;
             font-size: 20px;
             font-weight: 700;
             letter-spacing: -0.02em;
+            color: var(--ink);
         }
 
         .modal-close {
@@ -1689,7 +1730,7 @@
         .form-select:focus {
             outline: none;
             border-color: var(--blue);
-            background: white;
+            background: #FAFAF7;
             box-shadow: 0 0 0 3px var(--blue-bg);
         }
 
@@ -1777,7 +1818,7 @@
         .checklist-add input:focus {
             outline: none;
             border-color: var(--blue);
-            background: white;
+            background: #FAFAF7;
         }
 
         .modal-footer {
@@ -1805,6 +1846,7 @@
         }
 
         .task-summary-title {
+            font-family: "Playfair Display", Georgia, "Times New Roman", serif;
             font-size: 24px;
             font-weight: 700;
             color: var(--ink);
@@ -1924,13 +1966,13 @@
             padding: var(--space-5);
             background: var(--sys-green-bg);
             border-radius: var(--radius-lg);
-            border: 1px solid rgba(52, 199, 89, 0.2);
+            border: 1px solid rgba(62, 138, 78, 0.2);
         }
 
         .completion-section h3 {
             font-size: 17px;
             font-weight: 700;
-            color: #248A3D;
+            color: #2E6A3E;
             margin-bottom: var(--space-3);
             text-transform: none;
             letter-spacing: -0.01em;
@@ -1939,14 +1981,14 @@
         .completion-note {
             width: 100%;
             padding: var(--space-4);
-            border: 1px solid rgba(52, 199, 89, 0.3);
+            border: 1px solid rgba(62, 138, 78, 0.3);
             border-radius: var(--radius);
             font-size: 15px;
             font-family: inherit;
             resize: vertical;
             min-height: 100px;
             margin-bottom: var(--space-3);
-            background: white;
+            background: #FAFAF7;
             color: var(--ink);
         }
 
@@ -2243,9 +2285,9 @@
             padding: var(--space-2) var(--space-3);
             border-radius: var(--radius-pill);
             font-weight: 600;
-            color: #248A3D;
+            color: #2E6A3E;
             font-size: 13px;
-            border: 1px solid rgba(52, 199, 89, 0.2);
+            border: 1px solid rgba(62, 138, 78, 0.2);
             white-space: nowrap;
             max-width: 100%;
             overflow: hidden;
@@ -2262,7 +2304,7 @@
 
         .global-timer-bar .timer-indicator.paused-indicator {
             background: var(--sys-orange-bg);
-            color: #B85E00;
+            color: #8A6E28;
             border-color: rgba(255, 149, 0, 0.2);
         }
 
@@ -2293,7 +2335,7 @@
         }
 
         .btn-stop-all:hover {
-            background: #C41C14;
+            background: #A03230;
         }
 
         .btn-stop-all:active {
@@ -2347,7 +2389,7 @@
         }
 
         .calendar-cell {
-            background: white;
+            background: #FAFAF7;
             border: 1px solid var(--line);
             border-radius: var(--radius);
             min-height: 120px;
@@ -2554,7 +2596,7 @@
         }
 
         .view-switcher .btn.active {
-            background: white;
+            background: #FAFAF7;
             box-shadow: var(--shadow-sm);
             color: var(--ink);
         }
@@ -2625,7 +2667,7 @@
         .segmented-control .seg-option:hover { color: var(--ink); }
         .segmented-control .seg-option:active { transform: scale(0.96); }
         .segmented-control .seg-option.active {
-            background: white;
+            background: #FAFAF7;
             box-shadow: var(--shadow-sm);
             color: var(--ink);
             font-weight: 600;
@@ -2733,7 +2775,7 @@
         .category-pill:hover { border-color: var(--ink-soft); }
         .category-pill:active { transform: scale(0.96); }
         .category-pill.active {
-            background: white;
+            background: #FAFAF7;
             border-color: var(--pill-color, var(--blue));
             box-shadow: 0 0 0 3px var(--blue-bg);
             font-weight: 600;
@@ -2817,7 +2859,7 @@
             transition: color var(--duration-fast) var(--ease-out);
         }
         .field-hint.warning {
-            color: #B85E00;
+            color: #8A6E28;
         }
         .field-hint.warning svg { color: var(--sys-orange); }
         .form-input.input-valid {
@@ -2891,7 +2933,7 @@
         }
         .checklist-add-v2 input:focus {
             border-color: var(--blue);
-            background: white;
+            background: #FAFAF7;
             box-shadow: 0 0 0 3px var(--blue-bg);
         }
         .checklist-add-v2 input::placeholder { color: var(--ink-soft); }
@@ -3346,6 +3388,7 @@
             font-weight: 700;
             color: var(--ink);
             letter-spacing: -0.01em;
+            font-family: "Playfair Display", Georgia, serif;
         }
         .qr-popup-subtitle {
             font-size: 13px;
@@ -3355,7 +3398,7 @@
         .qr-code-frame {
             display: inline-flex;
             padding: var(--space-3);
-            background: white;
+            background: #FAFAF7;
             border-radius: var(--radius-lg);
             border: 1px solid var(--line);
             box-shadow: var(--shadow-sm);
@@ -3504,7 +3547,7 @@
                     <rect x="16" y="13" width="5" height="8" rx="1.5"/>
                 </svg>
             </div>
-            <h2 style="margin-bottom:12px; font-size:22px; font-weight:700; letter-spacing:-0.02em;">Dossier de synchronisation</h2>
+            <h2 style="margin-bottom:12px; font-size:22px; font-weight:700; letter-spacing:-0.02em; font-family:'Playfair Display', Georgia, serif;">Dossier de synchronisation</h2>
             <p style="color:var(--ink-soft); font-size:15px; margin-bottom:24px; line-height:1.5;">Veuillez indiquer le dossier racine (root) où votre Kanban sauvegardera et synchronisera ses informations.</p>
             <button class="btn btn-primary" onclick="selectRootFolder()" style="width:100%; justify-content:center;">Choisir le dossier</button>
         </div>
@@ -3566,7 +3609,7 @@
 
         <div class="calendar-container" id="calendar-container" style="display:none; padding: 0 var(--space-2) var(--space-6); overflow-x: hidden; overflow-y: auto; position: relative; width: 100%; box-sizing: border-box; min-height: 0;">
             <div class="calendar-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: var(--space-4); padding: 0 var(--space-2); gap: var(--space-3); flex-wrap: wrap;">
-                <h2 id="calendar-month-year" style="font-size: 22px; font-weight:700; letter-spacing:-0.02em;"></h2>
+                <h2 id="calendar-month-year" style="font-size: 22px; font-weight:700; letter-spacing:-0.02em; font-family: 'Playfair Display', Georgia, serif;"></h2>
                 <div style="display:flex; gap:var(--space-2); flex-shrink: 0;">
                     <button class="btn btn-secondary" onclick="prevMonth()">◀ Mois préc.</button>
                     <button class="btn btn-secondary" onclick="nextMonth()">Mois suiv. ▶</button>
@@ -3596,7 +3639,7 @@
                 <div class="app-icon" style="width:40px;height:40px;border-radius:10px;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;color:white;"><rect x="3" y="3" width="5" height="18" rx="1.5"/><rect x="9.5" y="8" width="5" height="13" rx="1.5"/><rect x="16" y="13" width="5" height="8" rx="1.5"/></svg>
                 </div>
-                <h3 id="qr-popup-title">Rejoignez-moi sur Facebook</h3>
+                <h3 id="qr-popup-title" style="font-family: 'Playfair Display', Georgia, serif;">Rejoignez-moi sur Facebook</h3>
             </div>
             <p class="qr-popup-subtitle">Scannez ce code pour accéder à mon profil.</p>
             <div class="qr-code-frame"><svg viewBox="0 0 164 164" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" role="img" aria-label="QR code vers Facebook"><rect width="164" height="164" fill="#ffffff"/><path d="M8,8h4v4h-4z M12,8h4v4h-4z M16,8h4v4h-4z M20,8h4v4h-4z M24,8h4v4h-4z M28,8h4v4h-4z M32,8h4v4h-4z M56,8h4v4h-4z M60,8h4v4h-4z M64,8h4v4h-4z M72,8h4v4h-4z M76,8h4v4h-4z M84,8h4v4h-4z M92,8h4v4h-4z M96,8h4v4h-4z M100,8h4v4h-4z M104,8h4v4h-4z M108,8h4v4h-4z M112,8h4v4h-4z M128,8h4v4h-4z M132,8h4v4h-4z M136,8h4v4h-4z M140,8h4v4h-4z M144,8h4v4h-4z M148,8h4v4h-4z M152,8h4v4h-4z M8,12h4v4h-4z M32,12h4v4h-4z M40,12h4v4h-4z M48,12h4v4h-4z M56,12h4v4h-4z M68,12h4v4h-4z M72,12h4v4h-4z M76,12h4v4h-4z M80,12h4v4h-4z M84,12h4v4h-4z M96,12h4v4h-4z M108,12h4v4h-4z M120,12h4v4h-4z M128,12h4v4h-4z M152,12h4v4h-4z M8,16h4v4h-4z M16,16h4v4h-4z M20,16h4v4h-4z M24,16h4v4h-4z M32,16h4v4h-4z M40,16h4v4h-4z M44,16h4v4h-4z M52,16h4v4h-4z M56,16h4v4h-4z M60,16h4v4h-4z M64,16h4v4h-4z M68,16h4v4h-4z M72,16h4v4h-4z M84,16h4v4h-4z M88,16h4v4h-4z M92,16h4v4h-4z M96,16h4v4h-4z M100,16h4v4h-4z M108,16h4v4h-4z M112,16h4v4h-4z M128,16h4v4h-4z M136,16h4v4h-4z M140,16h4v4h-4z M144,16h4v4h-4z M152,16h4v4h-4z M8,20h4v4h-4z M16,20h4v4h-4z M20,20h4v4h-4z M24,20h4v4h-4z M32,20h4v4h-4z M40,20h4v4h-4z M48,20h4v4h-4z M60,20h4v4h-4z M64,20h4v4h-4z M96,20h4v4h-4z M100,20h4v4h-4z M108,20h4v4h-4z M112,20h4v4h-4z M116,20h4v4h-4z M128,20h4v4h-4z M136,20h4v4h-4z M140,20h4v4h-4z M144,20h4v4h-4z M152,20h4v4h-4z M8,24h4v4h-4z M16,24h4v4h-4z M20,24h4v4h-4z M24,24h4v4h-4z M32,24h4v4h-4z M40,24h4v4h-4z M44,24h4v4h-4z M68,24h4v4h-4z M76,24h4v4h-4z M80,24h4v4h-4z M84,24h4v4h-4z M88,24h4v4h-4z M92,24h4v4h-4z M96,24h4v4h-4z M100,24h4v4h-4z M108,24h4v4h-4z M112,24h4v4h-4z M120,24h4v4h-4z M128,24h4v4h-4z M136,24h4v4h-4z M140,24h4v4h-4z M144,24h4v4h-4z M152,24h4v4h-4z M8,28h4v4h-4z M32,28h4v4h-4z M40,28h4v4h-4z M52,28h4v4h-4z M60,28h4v4h-4z M64,28h4v4h-4z M80,28h4v4h-4z M84,28h4v4h-4z M92,28h4v4h-4z M104,28h4v4h-4z M108,28h4v4h-4z M112,28h4v4h-4z M120,28h4v4h-4z M128,28h4v4h-4z M152,28h4v4h-4z M8,32h4v4h-4z M12,32h4v4h-4z M16,32h4v4h-4z M20,32h4v4h-4z M24,32h4v4h-4z M28,32h4v4h-4z M32,32h4v4h-4z M40,32h4v4h-4z M48,32h4v4h-4z M56,32h4v4h-4z M64,32h4v4h-4z M72,32h4v4h-4z M80,32h4v4h-4z M88,32h4v4h-4z M96,32h4v4h-4z M104,32h4v4h-4z M112,32h4v4h-4z M120,32h4v4h-4z M128,32h4v4h-4z M132,32h4v4h-4z M136,32h4v4h-4z M140,32h4v4h-4z M144,32h4v4h-4z M148,32h4v4h-4z M152,32h4v4h-4z M52,36h4v4h-4z M56,36h4v4h-4z M64,36h4v4h-4z M72,36h4v4h-4z M76,36h4v4h-4z M84,36h4v4h-4z M96,36h4v4h-4z M100,36h4v4h-4z M104,36h4v4h-4z M112,36h4v4h-4z M116,36h4v4h-4z M120,36h4v4h-4z M16,40h4v4h-4z M28,40h4v4h-4z M32,40h4v4h-4z M36,40h4v4h-4z M40,40h4v4h-4z M44,40h4v4h-4z M64,40h4v4h-4z M84,40h4v4h-4z M100,40h4v4h-4z M112,40h4v4h-4z M124,40h4v4h-4z M132,40h4v4h-4z M136,40h4v4h-4z M140,40h4v4h-4z M144,40h4v4h-4z M148,40h4v4h-4z M12,44h4v4h-4z M16,44h4v4h-4z M20,44h4v4h-4z M40,44h4v4h-4z M44,44h4v4h-4z M52,44h4v4h-4z M56,44h4v4h-4z M60,44h4v4h-4z M64,44h4v4h-4z M76,44h4v4h-4z M84,44h4v4h-4z M88,44h4v4h-4z M96,44h4v4h-4z M108,44h4v4h-4z M116,44h4v4h-4z M120,44h4v4h-4z M128,44h4v4h-4z M132,44h4v4h-4z M144,44h4v4h-4z M152,44h4v4h-4z M8,48h4v4h-4z M28,48h4v4h-4z M32,48h4v4h-4z M36,48h4v4h-4z M40,48h4v4h-4z M48,48h4v4h-4z M60,48h4v4h-4z M68,48h4v4h-4z M72,48h4v4h-4z M76,48h4v4h-4z M100,48h4v4h-4z M104,48h4v4h-4z M116,48h4v4h-4z M124,48h4v4h-4z M128,48h4v4h-4z M136,48h4v4h-4z M140,48h4v4h-4z M152,48h4v4h-4z M8,52h4v4h-4z M36,52h4v4h-4z M52,52h4v4h-4z M56,52h4v4h-4z M68,52h4v4h-4z M88,52h4v4h-4z M104,52h4v4h-4z M112,52h4v4h-4z M116,52h4v4h-4z M136,52h4v4h-4z M140,52h4v4h-4z M148,52h4v4h-4z M152,52h4v4h-4z M8,56h4v4h-4z M16,56h4v4h-4z M24,56h4v4h-4z M28,56h4v4h-4z M32,56h4v4h-4z M44,56h4v4h-4z M52,56h4v4h-4z M60,56h4v4h-4z M72,56h4v4h-4z M76,56h4v4h-4z M80,56h4v4h-4z M116,56h4v4h-4z M128,56h4v4h-4z M148,56h4v4h-4z M152,56h4v4h-4z M8,60h4v4h-4z M12,60h4v4h-4z M16,60h4v4h-4z M24,60h4v4h-4z M52,60h4v4h-4z M60,60h4v4h-4z M76,60h4v4h-4z M84,60h4v4h-4z M96,60h4v4h-4z M100,60h4v4h-4z M108,60h4v4h-4z M112,60h4v4h-4z M116,60h4v4h-4z M120,60h4v4h-4z M124,60h4v4h-4z M128,60h4v4h-4z M132,60h4v4h-4z M144,60h4v4h-4z M152,60h4v4h-4z M8,64h4v4h-4z M24,64h4v4h-4z M28,64h4v4h-4z M32,64h4v4h-4z M40,64h4v4h-4z M44,64h4v4h-4z M64,64h4v4h-4z M68,64h4v4h-4z M80,64h4v4h-4z M84,64h4v4h-4z M92,64h4v4h-4z M116,64h4v4h-4z M124,64h4v4h-4z M128,64h4v4h-4z M140,64h4v4h-4z M144,64h4v4h-4z M148,64h4v4h-4z M152,64h4v4h-4z M8,68h4v4h-4z M12,68h4v4h-4z M16,68h4v4h-4z M36,68h4v4h-4z M44,68h4v4h-4z M48,68h4v4h-4z M56,68h4v4h-4z M64,68h4v4h-4z M68,68h4v4h-4z M76,68h4v4h-4z M88,68h4v4h-4z M112,68h4v4h-4z M124,68h4v4h-4z M128,68h4v4h-4z M132,68h4v4h-4z M136,68h4v4h-4z M140,68h4v4h-4z M148,68h4v4h-4z M152,68h4v4h-4z M8,72h4v4h-4z M32,72h4v4h-4z M36,72h4v4h-4z M44,72h4v4h-4z M48,72h4v4h-4z M60,72h4v4h-4z M84,72h4v4h-4z M92,72h4v4h-4z M96,72h4v4h-4z M116,72h4v4h-4z M120,72h4v4h-4z M128,72h4v4h-4z M132,72h4v4h-4z M152,72h4v4h-4z M8,76h4v4h-4z M24,76h4v4h-4z M40,76h4v4h-4z M44,76h4v4h-4z M48,76h4v4h-4z M56,76h4v4h-4z M60,76h4v4h-4z M68,76h4v4h-4z M76,76h4v4h-4z M84,76h4v4h-4z M88,76h4v4h-4z M92,76h4v4h-4z M96,76h4v4h-4z M104,76h4v4h-4z M116,76h4v4h-4z M120,76h4v4h-4z M128,76h4v4h-4z M132,76h4v4h-4z M140,76h4v4h-4z M144,76h4v4h-4z M152,76h4v4h-4z M8,80h4v4h-4z M16,80h4v4h-4z M28,80h4v4h-4z M32,80h4v4h-4z M40,80h4v4h-4z M52,80h4v4h-4z M64,80h4v4h-4z M68,80h4v4h-4z M72,80h4v4h-4z M84,80h4v4h-4z M88,80h4v4h-4z M96,80h4v4h-4z M108,80h4v4h-4z M116,80h4v4h-4z M120,80h4v4h-4z M124,80h4v4h-4z M128,80h4v4h-4z M136,80h4v4h-4z M140,80h4v4h-4z M152,80h4v4h-4z M8,84h4v4h-4z M12,84h4v4h-4z M16,84h4v4h-4z M24,84h4v4h-4z M60,84h4v4h-4z M68,84h4v4h-4z M72,84h4v4h-4z M80,84h4v4h-4z M84,84h4v4h-4z M88,84h4v4h-4z M92,84h4v4h-4z M96,84h4v4h-4z M112,84h4v4h-4z M116,84h4v4h-4z M124,84h4v4h-4z M128,84h4v4h-4z M140,84h4v4h-4z M152,84h4v4h-4z M8,88h4v4h-4z M16,88h4v4h-4z M20,88h4v4h-4z M32,88h4v4h-4z M36,88h4v4h-4z M40,88h4v4h-4z M52,88h4v4h-4z M60,88h4v4h-4z M64,88h4v4h-4z M80,88h4v4h-4z M104,88h4v4h-4z M112,88h4v4h-4z M116,88h4v4h-4z M120,88h4v4h-4z M128,88h4v4h-4z M140,88h4v4h-4z M148,88h4v4h-4z M8,92h4v4h-4z M12,92h4v4h-4z M20,92h4v4h-4z M24,92h4v4h-4z M28,92h4v4h-4z M36,92h4v4h-4z M44,92h4v4h-4z M56,92h4v4h-4z M64,92h4v4h-4z M76,92h4v4h-4z M80,92h4v4h-4z M100,92h4v4h-4z M104,92h4v4h-4z M108,92h4v4h-4z M116,92h4v4h-4z M128,92h4v4h-4z M132,92h4v4h-4z M140,92h4v4h-4z M144,92h4v4h-4z M148,92h4v4h-4z M152,92h4v4h-4z M16,96h4v4h-4z M20,96h4v4h-4z M28,96h4v4h-4z M32,96h4v4h-4z M44,96h4v4h-4z M60,96h4v4h-4z M68,96h4v4h-4z M72,96h4v4h-4z M76,96h4v4h-4z M80,96h4v4h-4z M88,96h4v4h-4z M116,96h4v4h-4z M120,96h4v4h-4z M124,96h4v4h-4z M128,96h4v4h-4z M132,96h4v4h-4z M136,96h4v4h-4z M152,96h4v4h-4z M8,100h4v4h-4z M16,100h4v4h-4z M20,100h4v4h-4z M24,100h4v4h-4z M28,100h4v4h-4z M36,100h4v4h-4z M44,100h4v4h-4z M52,100h4v4h-4z M64,100h4v4h-4z M68,100h4v4h-4z M72,100h4v4h-4z M76,100h4v4h-4z M80,100h4v4h-4z M96,100h4v4h-4z M100,100h4v4h-4z M104,100h4v4h-4z M112,100h4v4h-4z M116,100h4v4h-4z M128,100h4v4h-4z M132,100h4v4h-4z M140,100h4v4h-4z M16,104h4v4h-4z M20,104h4v4h-4z M32,104h4v4h-4z M36,104h4v4h-4z M44,104h4v4h-4z M60,104h4v4h-4z M72,104h4v4h-4z M80,104h4v4h-4z M84,104h4v4h-4z M88,104h4v4h-4z M100,104h4v4h-4z M108,104h4v4h-4z M112,104h4v4h-4z M128,104h4v4h-4z M140,104h4v4h-4z M148,104h4v4h-4z M12,108h4v4h-4z M24,108h4v4h-4z M40,108h4v4h-4z M52,108h4v4h-4z M56,108h4v4h-4z M60,108h4v4h-4z M64,108h4v4h-4z M76,108h4v4h-4z M96,108h4v4h-4z M116,108h4v4h-4z M120,108h4v4h-4z M124,108h4v4h-4z M132,108h4v4h-4z M152,108h4v4h-4z M8,112h4v4h-4z M12,112h4v4h-4z M16,112h4v4h-4z M24,112h4v4h-4z M28,112h4v4h-4z M32,112h4v4h-4z M48,112h4v4h-4z M52,112h4v4h-4z M64,112h4v4h-4z M72,112h4v4h-4z M76,112h4v4h-4z M84,112h4v4h-4z M88,112h4v4h-4z M92,112h4v4h-4z M100,112h4v4h-4z M116,112h4v4h-4z M120,112h4v4h-4z M124,112h4v4h-4z M128,112h4v4h-4z M140,112h4v4h-4z M152,112h4v4h-4z M20,116h4v4h-4z M28,116h4v4h-4z M44,116h4v4h-4z M56,116h4v4h-4z M64,116h4v4h-4z M68,116h4v4h-4z M72,116h4v4h-4z M84,116h4v4h-4z M88,116h4v4h-4z M92,116h4v4h-4z M96,116h4v4h-4z M112,116h4v4h-4z M116,116h4v4h-4z M124,116h4v4h-4z M128,116h4v4h-4z M132,116h4v4h-4z M152,116h4v4h-4z M8,120h4v4h-4z M12,120h4v4h-4z M16,120h4v4h-4z M20,120h4v4h-4z M32,120h4v4h-4z M52,120h4v4h-4z M56,120h4v4h-4z M60,120h4v4h-4z M64,120h4v4h-4z M80,120h4v4h-4z M84,120h4v4h-4z M100,120h4v4h-4z M104,120h4v4h-4z M116,120h4v4h-4z M120,120h4v4h-4z M124,120h4v4h-4z M128,120h4v4h-4z M132,120h4v4h-4z M136,120h4v4h-4z M40,124h4v4h-4z M44,124h4v4h-4z M48,124h4v4h-4z M52,124h4v4h-4z M56,124h4v4h-4z M64,124h4v4h-4z M68,124h4v4h-4z M72,124h4v4h-4z M76,124h4v4h-4z M104,124h4v4h-4z M108,124h4v4h-4z M112,124h4v4h-4z M120,124h4v4h-4z M136,124h4v4h-4z M140,124h4v4h-4z M148,124h4v4h-4z M152,124h4v4h-4z M8,128h4v4h-4z M12,128h4v4h-4z M16,128h4v4h-4z M20,128h4v4h-4z M24,128h4v4h-4z M28,128h4v4h-4z M32,128h4v4h-4z M40,128h4v4h-4z M48,128h4v4h-4z M52,128h4v4h-4z M56,128h4v4h-4z M60,128h4v4h-4z M68,128h4v4h-4z M72,128h4v4h-4z M84,128h4v4h-4z M88,128h4v4h-4z M96,128h4v4h-4z M100,128h4v4h-4z M112,128h4v4h-4z M120,128h4v4h-4z M128,128h4v4h-4z M136,128h4v4h-4z M140,128h4v4h-4z M144,128h4v4h-4z M152,128h4v4h-4z M8,132h4v4h-4z M32,132h4v4h-4z M40,132h4v4h-4z M44,132h4v4h-4z M56,132h4v4h-4z M64,132h4v4h-4z M68,132h4v4h-4z M80,132h4v4h-4z M96,132h4v4h-4z M112,132h4v4h-4z M116,132h4v4h-4z M120,132h4v4h-4z M136,132h4v4h-4z M140,132h4v4h-4z M148,132h4v4h-4z M152,132h4v4h-4z M8,136h4v4h-4z M16,136h4v4h-4z M20,136h4v4h-4z M24,136h4v4h-4z M32,136h4v4h-4z M44,136h4v4h-4z M56,136h4v4h-4z M60,136h4v4h-4z M72,136h4v4h-4z M76,136h4v4h-4z M80,136h4v4h-4z M84,136h4v4h-4z M92,136h4v4h-4z M96,136h4v4h-4z M100,136h4v4h-4z M104,136h4v4h-4z M112,136h4v4h-4z M116,136h4v4h-4z M120,136h4v4h-4z M124,136h4v4h-4z M128,136h4v4h-4z M132,136h4v4h-4z M136,136h4v4h-4z M152,136h4v4h-4z M8,140h4v4h-4z M16,140h4v4h-4z M20,140h4v4h-4z M24,140h4v4h-4z M32,140h4v4h-4z M44,140h4v4h-4z M48,140h4v4h-4z M64,140h4v4h-4z M68,140h4v4h-4z M84,140h4v4h-4z M92,140h4v4h-4z M104,140h4v4h-4z M108,140h4v4h-4z M136,140h4v4h-4z M140,140h4v4h-4z M152,140h4v4h-4z M8,144h4v4h-4z M16,144h4v4h-4z M20,144h4v4h-4z M24,144h4v4h-4z M32,144h4v4h-4z M40,144h4v4h-4z M48,144h4v4h-4z M52,144h4v4h-4z M68,144h4v4h-4z M76,144h4v4h-4z M80,144h4v4h-4z M92,144h4v4h-4z M96,144h4v4h-4z M104,144h4v4h-4z M116,144h4v4h-4z M132,144h4v4h-4z M136,144h4v4h-4z M140,144h4v4h-4z M148,144h4v4h-4z M152,144h4v4h-4z M8,148h4v4h-4z M32,148h4v4h-4z M44,148h4v4h-4z M56,148h4v4h-4z M60,148h4v4h-4z M68,148h4v4h-4z M80,148h4v4h-4z M84,148h4v4h-4z M88,148h4v4h-4z M96,148h4v4h-4z M100,148h4v4h-4z M104,148h4v4h-4z M112,148h4v4h-4z M120,148h4v4h-4z M124,148h4v4h-4z M132,148h4v4h-4z M140,148h4v4h-4z M8,152h4v4h-4z M12,152h4v4h-4z M16,152h4v4h-4z M20,152h4v4h-4z M24,152h4v4h-4z M28,152h4v4h-4z M32,152h4v4h-4z M52,152h4v4h-4z M60,152h4v4h-4z M64,152h4v4h-4z M80,152h4v4h-4z M112,152h4v4h-4z M120,152h4v4h-4z M128,152h4v4h-4z M140,152h4v4h-4z M152,152h4v4h-4z" fill="#1D1D1F"/></svg></div>
@@ -4016,11 +4059,11 @@
                         const ratio = estimateSec > 0 ? elapsed / estimateSec : 0;
                         if      (ratio < 0.5)  { newLabel = 'En cours'; newColor = '#4A7C2E'; }
                         else if (ratio < 0.75) { newLabel = 'Moitié atteinte'; newColor = '#9B7A00'; }
-                        else if (ratio < 1)    { newLabel = 'Bientôt fini'; newColor = '#B85E00'; }
-                        else                   { newLabel = '⏱ Dépassement !'; newColor = '#C41C14'; }
+                        else if (ratio < 1)    { newLabel = 'Bientôt fini'; newColor = '#8A6E28'; }
+                        else                   { newLabel = '⏱ Dépassement !'; newColor = '#A03230'; }
                     } else { newLabel = 'Chronométrage'; newColor = '#4A7C2E'; }
-                } else if (paused) { newLabel = 'En pause'; newColor = '#B85E00'; }
-                else if (elapsed > 0) { newLabel = 'Interrompu'; newColor = '#B85E00'; }
+                } else if (paused) { newLabel = 'En pause'; newColor = '#8A6E28'; }
+                else if (elapsed > 0) { newLabel = 'Interrompu'; newColor = '#8A6E28'; }
                 if (labelEl) {
                     labelEl.style.color = newColor;
                     labelEl.innerHTML = `<span class="swatch" style="background:${newColor};"></span>${newLabel}`;
@@ -4226,7 +4269,7 @@
                 const t = normalizeColumnTitle(col.title);
                 if (t === 'a faire') {
                     col.title = "Aujourd'hui";
-                    if (!col.color) col.color = '#0071E3';
+                    if (!col.color) col.color = '#2B4570';
                 } else if (t === 'en cours') {
                     col.title = 'Demain';
                     if (!col.color || col.color === '#FF9500') col.color = '#FF9500';
@@ -4239,7 +4282,7 @@
 
             let todayCol = findColumnByRole('today');
             if (!todayCol) {
-                todayCol = { id: state.nextColumnId++, title: "Aujourd'hui", color: '#0071E3' };
+                todayCol = { id: state.nextColumnId++, title: "Aujourd'hui", color: '#2B4570' };
                 state.columns.unshift(todayCol);
             } else if (normalizeColumnTitle(todayCol.title) === 'a faire') {
                 todayCol.title = "Aujourd'hui";
@@ -4413,7 +4456,7 @@
         function migrateData(oldData) {
             const columns = (oldData.columns || []).map(col => {
                 const t = (col.title || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
-                if (t === 'a faire') return { ...col, title: "Aujourd'hui", color: col.color || '#0071E3' };
+                if (t === 'a faire') return { ...col, title: "Aujourd'hui", color: col.color || '#2B4570' };
                 if (t === 'en cours') return { ...col, title: 'Demain', color: col.color || '#FF9500' };
                 return col;
             });
@@ -5154,7 +5197,7 @@
                 body += `
                     <div class="task-summary-section">
                         <h3>Note de complétion</h3>
-                        <div style="padding: var(--space-4); background: var(--sys-green-bg); border-radius: var(--radius); font-size: 14px; line-height: 1.6; color: #248A3D; font-style: italic; border: 1px solid rgba(52,199,89,0.15);">
+                        <div style="padding: var(--space-4); background: var(--sys-green-bg); border-radius: var(--radius); font-size: 14px; line-height: 1.6; color: #2E6A3E; font-style: italic; border: 1px solid rgba(52,199,89,0.15);">
                             ${escapeHtml(card.completionNote).replace(/\n/g, '<br>')}
                         </div>
                     </div>
@@ -5734,14 +5777,14 @@
 
         /* --- CATEGORY PILLS SYSTEM --- */
         const PRESET_CATEGORIES = [
-            { name: 'Travail',   color: '#0071E3' },
-            { name: 'Personnel', color: '#AF52DE' },
-            { name: 'Santé',     color: '#34C759' },
-            { name: 'Courses',   color: '#FF9500' },
-            { name: 'Projet',    color: '#5856D6' },
-            { name: 'Admin',     color: '#8E8E93' },
-            { name: 'Urgent',    color: '#FF3B30' },
-            { name: 'Idée',      color: '#FFCC00' },
+            { name: 'Travail',   color: '#2B4570' },
+            { name: 'Personnel', color: '#7B5EA7' },
+            { name: 'Santé',     color: '#3E8A4E' },
+            { name: 'Courses',   color: '#D4883A' },
+            { name: 'Projet',    color: '#3D4F7C' },
+            { name: 'Admin',     color: '#6B6E76' },
+            { name: 'Urgent',    color: '#C73E3A' },
+            { name: 'Idée',      color: '#E2A84F' },
         ];
 
         function initCategoryPills(selectedName, selectedColor) {
@@ -5776,7 +5819,7 @@
                 selectCategoryPill(existing.name, existing.color);
                 return;
             }
-            const colors = ['#0071E3','#AF52DE','#34C759','#FF9500','#5856D6','#FF3B30','#FFCC00','#00C7BE','#FF6482','#32ADE6','#8E8E93'];
+            const colors = ['#2B4570','#7B5EA7','#3E8A4E','#D4883A','#3D4F7C','#C73E3A','#E2A84F','#2D7A6E','#B84C6A','#3B88C6','#6B6E76'];
             const notUsed = colors.find(c => !PRESET_CATEGORIES.some(p => p.color === c)) || colors[PRESET_CATEGORIES.length % colors.length];
             PRESET_CATEGORIES.push({ name: cleanName, color: notUsed });
             const nameInput = document.getElementById('card-category');
@@ -6209,7 +6252,7 @@
                 deadline: document.getElementById('card-deadline').value || null,
                 priority: document.getElementById('card-priority').value,
                 category: catInput ? (catInput.value.trim() || null) : null,
-                categoryColor: catColorInput ? (catColorInput.value || '#0071E3') : '#0071E3',
+                categoryColor: catColorInput ? (catColorInput.value || '#2B4570') : '#2B4570',
                 recurrence: recurrence,
                 checklist: checklist,
                 completionNote: null,
@@ -6234,11 +6277,11 @@
                         if (freeSlots.length > 0) {
                             suggestionsHTML = `
                                 <div style="margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--line);">
-                                    <p style="font-size: 14px; font-weight: 600; color: #248A3D; margin-bottom: var(--space-2);">💡 Créneaux libres suggérés (${duration} min) :</p>
+                                    <p style="font-size: 14px; font-weight: 600; color: #2E6A3E; margin-bottom: var(--space-2);">💡 Créneaux libres suggérés (${duration} min) :</p>
                                     <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
                                         ${freeSlots.map(slot => {
                                             const formatted = formatTimeWindowFromMins(slot.start, slot.end);
-                                            return `<button class="btn btn-secondary" onclick="applyTimeSuggestion('${formatted.startStr}')" style="background: var(--sys-green-bg); color: #248A3D; border: 1px solid rgba(52,199,89,0.3); font-size: 13px; padding: 8px 14px;">${formatted.text}</button>`;
+                                            return `<button class="btn btn-secondary" onclick="applyTimeSuggestion('${formatted.startStr}')" style="background: var(--sys-green-bg); color: #2E6A3E; border: 1px solid rgba(52,199,89,0.3); font-size: 13px; padding: 8px 14px;">${formatted.text}</button>`;
                                         }).join('')}
                                     </div>
                                 </div>
@@ -6246,7 +6289,7 @@
                         } else {
                             suggestionsHTML = `
                                 <div style="margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--line);">
-                                    <p style="font-size: 14px; font-weight: 600; color: #B85E00; margin-bottom: var(--space-2);">⚠️ Aucun créneau libre suffisant trouvé (8h-22h).</p>
+                                    <p style="font-size: 14px; font-weight: 600; color: #8A6E28; margin-bottom: var(--space-2);">⚠️ Aucun créneau libre suffisant trouvé (8h-22h).</p>
                                 </div>
                             `;
                         }
@@ -6345,7 +6388,7 @@
                     <div class="category-pills" id="category-pills">
                     </div>
                     <input type="hidden" id="card-category" value="${escapeHtml(card.category || '')}">
-                    <input type="hidden" id="card-category-color" value="${card.categoryColor || '#0071E3'}">
+                    <input type="hidden" id="card-category-color" value="${card.categoryColor || '#2B4570'}">
 
                     <div class="form-section-header">Durée estimée</div>
                     <div class="duration-pills" id="duration-pills">
@@ -6510,7 +6553,7 @@
                 deadline: document.getElementById('card-deadline').value || null,
                 priority: document.getElementById('card-priority').value,
                 category: catInput ? (catInput.value.trim() || null) : null,
-                categoryColor: catColorInput ? (catColorInput.value || '#0071E3') : '#0071E3',
+                categoryColor: catColorInput ? (catColorInput.value || '#2B4570') : '#2B4570',
                 recurrence: recurrence,
                 checklist: checklist
             };
@@ -6531,11 +6574,11 @@
                         if (freeSlots.length > 0) {
                             suggestionsHTML = `
                                 <div style="margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--line);">
-                                    <p style="font-size: 14px; font-weight: 600; color: #248A3D; margin-bottom: var(--space-2);">💡 Créneaux libres suggérés (${duration} min) :</p>
+                                    <p style="font-size: 14px; font-weight: 600; color: #2E6A3E; margin-bottom: var(--space-2);">💡 Créneaux libres suggérés (${duration} min) :</p>
                                     <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
                                         ${freeSlots.map(slot => {
                                             const formatted = formatTimeWindowFromMins(slot.start, slot.end);
-                                            return `<button class="btn btn-secondary" onclick="applyTimeSuggestion('${formatted.startStr}')" style="background: var(--sys-green-bg); color: #248A3D; border: 1px solid rgba(52,199,89,0.3); font-size: 13px; padding: 8px 14px;">${formatted.text}</button>`;
+                                            return `<button class="btn btn-secondary" onclick="applyTimeSuggestion('${formatted.startStr}')" style="background: var(--sys-green-bg); color: #2E6A3E; border: 1px solid rgba(52,199,89,0.3); font-size: 13px; padding: 8px 14px;">${formatted.text}</button>`;
                                         }).join('')}
                                     </div>
                                 </div>
@@ -6543,7 +6586,7 @@
                         } else {
                             suggestionsHTML = `
                                 <div style="margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--line);">
-                                    <p style="font-size: 14px; font-weight: 600; color: #B85E00; margin-bottom: var(--space-2);">⚠️ Aucun créneau libre suffisant trouvé (8h-22h).</p>
+                                    <p style="font-size: 14px; font-weight: 600; color: #8A6E28; margin-bottom: var(--space-2);">⚠️ Aucun créneau libre suffisant trouvé (8h-22h).</p>
                                 </div>
                             `;
                         }
@@ -7135,18 +7178,18 @@
 
         // =========== COLUMN COLOR SYSTEM ============
         const COLUMN_COLORS = [
-            '#6E6E73',
-            '#0071E3',
-            '#34C759',
-            '#FF9500',
-            '#FF3B30',
-            '#5856D6',
-            '#AF52DE',
-            '#FF2D55',
-            '#FFCC00',
-            '#32ADE6',
-            '#00C7BE',
-            '#FF6482',
+            '#6B6E76',
+            '#2B4570',
+            '#3E8A4E',
+            '#D4883A',
+            '#C73E3A',
+            '#3D4F7C',
+            '#7B5EA7',
+            '#B84C6A',
+            '#E2A84F',
+            '#3B88C6',
+            '#2D7A6E',
+            '#D48A5A',
         ];
 
         function changeColumnColor(columnId) {
@@ -7164,9 +7207,9 @@
 
         function createDefaultColumns() {
             state.columns = [
-                { id: 1, title: "Aujourd'hui", color: '#0071E3' },
-                { id: 2, title: 'Demain', color: '#FF9500' },
-                { id: 3, title: 'Terminé', color: '#34C759' }
+                { id: 1, title: "Aujourd'hui", color: '#2B4570' },
+                { id: 2, title: 'Demain', color: '#D4883A' },
+                { id: 3, title: 'Terminé', color: '#3E8A4E' }
             ];
             state.nextColumnId = 4;
             saveState();

@@ -3533,10 +3533,647 @@
             .stat-item {
                 padding: var(--space-4);
             }
+
+            /* Mobile: sidebar cachée */
+            .sidebar {
+                display: none !important;
+            }
+            .sidebar-overlay {
+                display: none !important;
+            }
+            .app-layout {
+                margin-left: 0 !important;
+            }
+            .toolbar .toolbar-brand-text {
+                display: none !important;
+            }
+
+            /* Mobile: tab bar basse visible */
+            .mobile-tab-bar {
+                display: flex !important;
+            }
+            .app-container {
+                padding-bottom: 72px !important;
+            }
+        }
+
+        /* ============================================================
+           LOGIN SCREEN
+           ============================================================ */
+        .login-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: var(--bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: var(--space-4);
+        }
+        .login-screen.hidden { display: none !important; }
+        .login-card {
+            background: var(--glass-solid);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-modal);
+            border: 1px solid var(--line);
+            max-width: 400px;
+            width: 100%;
+            padding: var(--space-8) var(--space-6);
+            text-align: center;
+            animation: slideUp var(--duration-modal) var(--ease-drawer);
+        }
+        .login-card .app-icon {
+            margin: 0 auto var(--space-5);
+            width: 64px; height: 64px; border-radius: 16px;
+        }
+        .login-card h2 {
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-1);
+            color: var(--ink);
+        }
+        .login-card .login-subtitle {
+            font-size: 14px;
+            color: var(--ink-soft);
+            margin-bottom: var(--space-6);
+        }
+        .login-card .form-group { text-align: left; }
+        .login-card .form-input {
+            border-radius: var(--radius);
+        }
+        .login-error {
+            font-size: 13px;
+            color: var(--sys-red);
+            margin-bottom: var(--space-3);
+            display: none;
+            text-align: left;
+            padding: var(--space-2) var(--space-3);
+            background: var(--sys-red-bg);
+            border-radius: var(--radius-sm);
+        }
+        .login-error.visible { display: block; }
+        .login-card .btn-primary {
+            width: 100%;
+            justify-content: center;
+            margin-top: var(--space-2);
+            padding: 12px 20px;
+        }
+        .login-register-link {
+            margin-top: var(--space-4);
+            font-size: 13px;
+            color: var(--ink-soft);
+        }
+        .login-register-link a {
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .login-register-link a:hover { text-decoration: underline; }
+
+        /* Register form */
+        .register-form { display: none; }
+        .register-form.visible { display: block; }
+        .login-form.hidden { display: none; }
+
+        /* ============================================================
+           SIDEBAR
+           ============================================================ */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 240px;
+            height: 100vh;
+            background: var(--glass-solid);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-right: 1px solid var(--line);
+            z-index: 500;
+            display: flex;
+            flex-direction: column;
+            transition: transform var(--duration-slow) var(--ease-drawer), opacity var(--duration-normal) var(--ease-out);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .sidebar.collapsed {
+            transform: translateX(-240px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .sidebar-header {
+            padding: var(--space-4) var(--space-4) var(--space-3);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            border-bottom: 1px solid var(--line);
+            flex-shrink: 0;
+        }
+        .sidebar-header .app-icon {
+            width: 36px; height: 36px; border-radius: var(--radius-sm); flex-shrink: 0;
+        }
+        .sidebar-header .app-icon svg { width: 20px; height: 20px; }
+        .sidebar-brand-text {
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: -0.02em;
+        }
+        .sidebar-user {
+            padding: var(--space-3) var(--space-4);
+            border-bottom: 1px solid var(--line);
+            flex-shrink: 0;
+        }
+        .sidebar-user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+        .sidebar-avatar {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: var(--blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .sidebar-username {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink);
+        }
+        .sidebar-role {
+            font-size: 11px;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .sidebar-nav {
+            flex: 1;
+            padding: var(--space-2) var(--space-2);
+            overflow-y: auto;
+        }
+        .sidebar-section-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: var(--space-3) var(--space-3) var(--space-1);
+            margin-top: var(--space-2);
+        }
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            width: 100%;
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--ink);
+            background: none;
+            border: none;
+            font-family: inherit;
+            text-align: left;
+            transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+        }
+        .sidebar-nav-item:hover { background: var(--bg-alt); }
+        .sidebar-nav-item.active {
+            background: var(--blue-bg);
+            color: var(--blue);
+            font-weight: 600;
+        }
+        .sidebar-nav-item svg {
+            width: 18px; height: 18px; flex-shrink: 0; opacity: 0.7;
+        }
+        .sidebar-nav-item.active svg { opacity: 1; }
+        .sidebar-nav-item .nav-badge {
+            margin-left: auto;
+            background: var(--blue);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: var(--radius-pill);
+            min-width: 18px;
+            text-align: center;
+        }
+        .sidebar-footer {
+            padding: var(--space-3) var(--space-4);
+            border-top: 1px solid var(--line);
+            flex-shrink: 0;
+        }
+        .sidebar-footer .btn {
+            width: 100%;
+            justify-content: center;
+            font-size: 13px;
+            padding: 8px 16px;
+        }
+
+        /* ============================================================
+           SIDEBAR OVERLAY (mobile)
+           ============================================================ */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.35);
+            backdrop-filter: blur(2px);
+            z-index: 499;
+            display: none;
+        }
+        .sidebar-overlay.visible { display: block; }
+
+        /* ============================================================
+           TOP TOOLBAR
+           ============================================================ */
+        .toolbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--line);
+            padding: var(--space-3) var(--space-4);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin: 0 calc(-1 * var(--space-4));
+            min-height: 52px;
+        }
+        .toolbar-toggle {
+            width: 36px; height: 36px;
+            border-radius: var(--radius-sm);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background var(--duration-fast) var(--ease-out);
+            flex-shrink: 0;
+        }
+        .toolbar-toggle:hover { background: var(--bg-alt); }
+        .toolbar-toggle svg { width: 22px; height: 22px; }
+        .toolbar-brand-text {
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: -0.02em;
+            margin-right: var(--space-3);
+        }
+        .toolbar-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ink);
+            flex: 1;
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .toolbar-actions {
+            display: flex;
+            gap: var(--space-2);
+            align-items: center;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+        .toolbar-user-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            background: none;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-pill);
+            padding: 4px 12px 4px 4px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background var(--duration-fast) var(--ease-out);
+        }
+        .toolbar-user-btn:hover { background: var(--bg-alt); }
+        .toolbar-user-avatar {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: var(--blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .toolbar-user-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        /* ============================================================
+           APP LAYOUT (sidebar + main)
+           ============================================================ */
+        .app-layout {
+            margin-left: 240px;
+            min-height: 100vh;
+            transition: margin-left var(--duration-slow) var(--ease-drawer);
+        }
+        .app-layout.full-width {
+            margin-left: 0;
+        }
+
+        /* ============================================================
+           MODULE CONTENT AREAS
+           ============================================================ */
+        .module-content { display: none; }
+        .module-content.active { display: block; }
+        .module-placeholder {
+            padding: var(--space-10) var(--space-4);
+            text-align: center;
+            color: var(--ink-soft);
+        }
+        .module-placeholder svg { width: 48px; height: 48px; opacity: 0.3; margin-bottom: var(--space-4); }
+        .module-placeholder h3 {
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: var(--space-2);
+        }
+        .module-placeholder p { font-size: 14px; max-width: 400px; margin: 0 auto; line-height: 1.6; }
+
+        /* Users table (Admin) */
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .users-table th, .users-table td {
+            padding: var(--space-3) var(--space-4);
+            text-align: left;
+            border-bottom: 1px solid var(--line);
+        }
+        .users-table th {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .users-table tr:hover td { background: var(--bg-alt); }
+        .role-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: var(--radius-pill);
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .role-badge.admin { background: var(--blue-bg); color: var(--blue); }
+        .role-badge.editor { background: var(--sys-orange-bg); color: #8A6E28; }
+        .role-badge.viewer { background: var(--bg-alt); color: var(--ink-soft); border: 1px solid var(--line); }
+
+        /* ============================================================
+           MOBILE TAB BAR (bottom)
+           ============================================================ */
+        .mobile-tab-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 500;
+            background: var(--glass-solid);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-top: 1px solid var(--line);
+            padding: var(--space-1) 0;
+            padding-bottom: env(safe-area-inset-bottom, var(--space-1));
+            justify-content: space-around;
+            align-items: center;
+        }
+        .mobile-tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: var(--space-1) var(--space-2);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--ink-soft);
+            font-size: 10px;
+            font-weight: 500;
+            font-family: inherit;
+            transition: color var(--duration-fast) var(--ease-out);
+            min-width: 48px;
+        }
+        .mobile-tab-item svg { width: 22px; height: 22px; }
+        .mobile-tab-item.active { color: var(--blue); font-weight: 600; }
+        .mobile-tab-item .tab-badge {
+            position: absolute;
+            top: -2px;
+            right: 6px;
+            background: var(--sys-red);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ============================================================
+           STATS MODULE STANDALONE
+           ============================================================ */
+        .stats-module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-4);
+            padding: var(--space-4) 0;
+        }
+        .stats-card {
+            background: #FAFAF7;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            padding: var(--space-5);
+            box-shadow: var(--shadow-sm);
+        }
+        .stats-card h4 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ink-soft);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: var(--space-3);
+        }
+        .stats-card .big-number {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+        .stats-card .big-number.green { color: var(--sys-green); }
+        .stats-card .big-number.blue { color: var(--blue); }
+        .stats-card .big-number.red { color: var(--sys-red); }
+        .stats-card .big-number.orange { color: var(--sys-orange); }
+        .stats-card .desc {
+            font-size: 13px;
+            color: var(--ink-soft);
+            margin-top: var(--space-2);
         }
     </style>
 </head>
 <body>
+    <!-- ============ LOGIN SCREEN ============ -->
+    <div class="login-screen" id="login-screen">
+        <div class="login-card">
+            <div class="app-icon" style="width:64px;height:64px;border-radius:16px;margin:0 auto var(--space-5);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:36px;height:36px;color:white;"><rect x="3" y="3" width="5" height="18" rx="1.5"/><rect x="9.5" y="8" width="5" height="13" rx="1.5"/><rect x="16" y="13" width="5" height="8" rx="1.5"/></svg>
+            </div>
+            <h2>VN</h2>
+            <p class="login-subtitle">Gestion de tâches — Connexion</p>
+
+            <!-- Login Form -->
+            <div class="login-form" id="login-form">
+                <div class="login-error" id="login-error">Identifiants incorrects</div>
+                <div class="form-group">
+                    <label class="form-label-v2">Nom d'utilisateur</label>
+                    <input type="text" class="form-input" id="login-username" placeholder="Entrez votre identifiant" autofocus>
+                </div>
+                <div class="form-group">
+                    <label class="form-label-v2">Mot de passe</label>
+                    <input type="password" class="form-input" id="login-password" placeholder="Mot de passe">
+                </div>
+                <button class="btn btn-primary" onclick="doLogin()">Se connecter</button>
+                <p class="login-register-link">Pas encore de compte ? <a onclick="showRegisterFromLogin()">Créer un compte</a></p>
+            </div>
+
+            <!-- Register Form -->
+            <div class="register-form" id="register-form">
+                <div class="login-error" id="register-error">Erreur d'inscription</div>
+                <div class="form-group">
+                    <label class="form-label-v2">Nom d'utilisateur</label>
+                    <input type="text" class="form-input" id="reg-username" placeholder="Choisir un identifiant">
+                </div>
+                <div class="form-group">
+                    <label class="form-label-v2">Mot de passe</label>
+                    <input type="password" class="form-input" id="reg-password" placeholder="Choisir un mot de passe">
+                </div>
+                <div class="form-group">
+                    <label class="form-label-v2">Confirmer le mot de passe</label>
+                    <input type="password" class="form-input" id="reg-password-confirm" placeholder="Confirmer">
+                </div>
+                <button class="btn btn-primary" onclick="doRegister()">S'inscrire</button>
+                <p class="login-register-link"><a onclick="showLoginFromRegister()">← Retour à la connexion</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SIDEBAR ============ -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <nav class="sidebar collapsed" id="sidebar">
+        <div class="sidebar-header">
+            <div class="app-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="5" height="18" rx="1.5"/><rect x="9.5" y="8" width="5" height="13" rx="1.5"/><rect x="16" y="13" width="5" height="8" rx="1.5"/></svg>
+            </div>
+            <span class="sidebar-brand-text">VN</span>
+        </div>
+        <div class="sidebar-user">
+            <div class="sidebar-user-info">
+                <div class="sidebar-avatar" id="sidebar-avatar">A</div>
+                <div>
+                    <div class="sidebar-username" id="sidebar-username">Admin</div>
+                    <div class="sidebar-role" id="sidebar-role">Administrateur</div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-nav">
+            <div class="sidebar-section-label">Modules</div>
+            <button class="sidebar-nav-item active" data-module="board" onclick="switchModule('board')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="5" height="18" rx="1.5"/><rect x="9.5" y="8" width="5" height="13" rx="1.5"/><rect x="16" y="13" width="5" height="8" rx="1.5"/></svg>
+                Tableau
+            </button>
+            <button class="sidebar-nav-item" data-module="calendar" onclick="switchModule('calendar')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                Calendrier
+            </button>
+            <button class="sidebar-nav-item" data-module="timers" onclick="switchModule('timers')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="9"/><path d="M12 8v5l3 2M12 2v2"/></svg>
+                Chronomètres
+            </button>
+            <button class="sidebar-nav-item" data-module="stats" onclick="switchModule('stats')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                Statistiques
+            </button>
+            <button class="sidebar-nav-item" data-module="archives" onclick="switchModule('archives')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+                Archives
+            </button>
+            <button class="sidebar-nav-item" data-module="team" onclick="switchModule('team')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+                Équipe
+                <span class="nav-badge" id="team-count-badge">0</span>
+            </button>
+
+            <div class="sidebar-section-label">Administration</div>
+            <button class="sidebar-nav-item" data-module="settings" onclick="switchModule('settings')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+                Paramètres
+            </button>
+            <button class="sidebar-nav-item" data-module="admin" onclick="switchModule('admin')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Gestion utilisateurs
+            </button>
+        </div>
+        <div class="sidebar-footer">
+            <button class="btn btn-ghost" onclick="doLogout()" style="color:var(--sys-red);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+                Déconnexion
+            </button>
+        </div>
+    </nav>
+
+    <!-- ============ MOBILE TAB BAR ============ -->
+    <div class="mobile-tab-bar" id="mobile-tab-bar">
+        <button class="mobile-tab-item active" data-module="board" onclick="switchModule('board')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="5" height="18" rx="1.5"/><rect x="9.5" y="8" width="5" height="13" rx="1.5"/><rect x="16" y="13" width="5" height="8" rx="1.5"/></svg>
+            Tableau
+        </button>
+        <button class="mobile-tab-item" data-module="calendar" onclick="switchModule('calendar')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            Agenda
+        </button>
+        <button class="mobile-tab-item" data-module="timers" onclick="switchModule('timers')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="9"/><path d="M12 8v5l3 2M12 2v2"/></svg>
+            Timer
+        </button>
+        <button class="mobile-tab-item" data-module="stats" onclick="switchModule('stats')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+            Stats
+        </button>
+        <button class="mobile-tab-item" data-module="settings" onclick="switchModule('settings')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+            Réglages
+        </button>
+    </div>
+
+    <!-- ============ APP LAYOUT ============ -->
+    <div class="app-layout full-width" id="app-layout">
     <!-- Overlay de synchronisation -->
     <div id="sync-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:var(--bg); z-index:9999; display:none; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:20px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
         <div style="background:var(--glass-solid); backdrop-filter: blur(20px); padding:40px; border-radius:var(--radius-xl); box-shadow:var(--shadow-modal); max-width:400px; width:100%; border: 1px solid var(--line);">
@@ -3554,6 +4191,21 @@
     </div>
 
     <div class="app-container">
+        <!-- Top Toolbar -->
+        <div class="toolbar" id="app-toolbar">
+            <button class="toolbar-toggle" onclick="toggleSidebar()" aria-label="Menu">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <span class="toolbar-brand-text">VN</span>
+            <span class="toolbar-title" id="toolbar-title">Tableau de bord</span>
+            <div class="toolbar-actions">
+                <button class="toolbar-user-btn" onclick="toggleUserMenu()" id="toolbar-user-btn">
+                    <div class="toolbar-user-avatar" id="toolbar-user-avatar">A</div>
+                    <span class="toolbar-user-name" id="toolbar-user-name">Admin</span>
+                </button>
+            </div>
+        </div>
+
         <div class="header">
             <div class="header-top">
                 <div class="header-brand">
@@ -3622,6 +4274,81 @@
             <div class="board" id="board"></div>
         </div>
 
+        <!-- ============ MODULE: Statistics ============ -->
+        <div class="module-content" id="module-stats">
+            <div class="stats-module-grid">
+                <div class="stats-card">
+                    <h4>Tâches terminées</h4>
+                    <div class="big-number green" id="mod-stat-completed">0</div>
+                    <div class="desc">Total des tâches complétées</div>
+                </div>
+                <div class="stats-card">
+                    <h4>En cours / Demain</h4>
+                    <div class="big-number blue" id="mod-stat-progress">0</div>
+                    <div class="desc">Tâches planifiées</div>
+                </div>
+                <div class="stats-card">
+                    <h4>En retard</h4>
+                    <div class="big-number red" id="mod-stat-overdue">0</div>
+                    <div class="desc">Tâches dépassant leur date limite</div>
+                </div>
+                <div class="stats-card">
+                    <h4>Total</h4>
+                    <div class="big-number orange" id="mod-stat-total">0</div>
+                    <div class="desc">Nombre total de tâches actives</div>
+                </div>
+                <div class="stats-card" style="grid-column: 1 / -1;">
+                    <h4>Temps total enregistré</h4>
+                    <div class="big-number blue" id="mod-stat-time" style="font-size:28px;">0h 00min</div>
+                    <div class="desc">Cumul de tous les chronomètres</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ MODULE: Timers ============ -->
+        <div class="module-content" id="module-timers">
+            <div class="module-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="9"/><path d="M12 8v5l3 2M12 2v2"/></svg>
+                <h3>Chronomètres actifs</h3>
+                <p id="timers-module-content">Aucun chronomètre en cours. Démarrez un timer depuis une carte du tableau.</p>
+            </div>
+        </div>
+
+        <!-- ============ MODULE: Archives (standalone) ============ -->
+        <div class="module-content" id="module-archives">
+            <div id="archives-module-content"></div>
+        </div>
+
+        <!-- ============ MODULE: Team ============ -->
+        <div class="module-content" id="module-team">
+            <div class="module-placeholder" id="team-module-content">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+                <h3>Équipe</h3>
+                <p>Gérez les membres de votre équipe et leurs rôles. Disponible pour les administrateurs.</p>
+            </div>
+        </div>
+
+        <!-- ============ MODULE: Settings ============ -->
+        <div class="module-content" id="module-settings">
+            <div class="module-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+                <h3>Paramètres</h3>
+                <p>Configuration de l'application, préférences utilisateur et options de synchronisation.</p>
+                <div style="margin-top:var(--space-6); text-align:left; max-width:400px; margin-left:auto; margin-right:auto;">
+                    <div class="form-group">
+                        <label class="form-label-v2">Changer le mot de passe</label>
+                        <input type="password" class="form-input" id="settings-new-password" placeholder="Nouveau mot de passe" style="margin-bottom:var(--space-2);">
+                        <button class="btn btn-primary" onclick="changePassword()" style="width:100%;justify-content:center;">Enregistrer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ MODULE: Admin (Gestion utilisateurs) ============ -->
+        <div class="module-content" id="module-admin">
+            <div id="admin-module-content"></div>
+        </div>
+
         <!-- Footer / copyright cliquable → ouvre le pop-up QR code -->
         <footer class="app-footer">
             <button class="copyright-btn" onclick="openQRPopup()" aria-label="Informations de copyright">
@@ -3658,6 +4385,7 @@
         </div>
         <div class="archive-content" id="archive-content"></div>
     </div>
+    </div> <!-- /app-layout -->
 
     <script>
         // =========== DATA STRUCTURE ============
@@ -7606,7 +8334,585 @@
             });
         }
 
+        // ============================================================
+        //   AUTH SYSTEM — Login, RBAC, Sessions
+        // ============================================================
+
+        const AUTH_KEY = 'vn-auth-users';
+        const SESSION_KEY = 'vn-session';
+
+        // Default users database
+        const DEFAULT_USERS = [
+            { username: 'admin', password: 'admin123', role: 'admin', createdAt: new Date().toISOString() },
+            { username: 'user', password: 'user123', role: 'editor', createdAt: new Date().toISOString() }
+        ];
+
+        // Permissions by role
+        const ROLE_PERMISSIONS = {
+            admin:  ['view', 'create', 'edit', 'delete', 'complete', 'export', 'archive', 'manage_users', 'admin_panel', 'settings'],
+            editor: ['view', 'create', 'edit', 'delete', 'complete', 'export', 'archive', 'settings'],
+            viewer: ['view', 'export']
+        };
+
+        const ROLE_LABELS = { admin: 'Administrateur', editor: 'Éditeur', viewer: 'Lecteur' };
+
+        let currentUser = null;
+        let usersDB = [];
+
+        function loadUsers() {
+            try {
+                const stored = localStorage.getItem(AUTH_KEY);
+                if (stored) {
+                    usersDB = JSON.parse(stored);
+                } else {
+                    usersDB = [...DEFAULT_USERS];
+                    saveUsers();
+                }
+            } catch (e) {
+                usersDB = [...DEFAULT_USERS];
+            }
+        }
+
+        function saveUsers() {
+            localStorage.setItem(AUTH_KEY, JSON.stringify(usersDB));
+        }
+
+        function loadSession() {
+            try {
+                const session = localStorage.getItem(SESSION_KEY);
+                if (session) {
+                    const parsed = JSON.parse(session);
+                    // Check if session is still valid (24h)
+                    if (parsed.timestamp && (Date.now() - parsed.timestamp < 86400000)) {
+                        return parsed;
+                    }
+                }
+            } catch (e) {}
+            return null;
+        }
+
+        function saveSession(user) {
+            localStorage.setItem(SESSION_KEY, JSON.stringify({
+                username: user.username,
+                role: user.role,
+                timestamp: Date.now()
+            }));
+        }
+
+        function clearSession() {
+            localStorage.removeItem(SESSION_KEY);
+        }
+
+        function hasPermission(permission) {
+            if (!currentUser) return false;
+            const perms = ROLE_PERMISSIONS[currentUser.role] || [];
+            return perms.includes(permission);
+        }
+
+        function hasRole(role) {
+            if (!currentUser) return false;
+            if (Array.isArray(role)) return role.includes(currentUser.role);
+            return currentUser.role === role;
+        }
+
+        // ---- LOGIN ----
+        function doLogin() {
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value;
+            const errorEl = document.getElementById('login-error');
+
+            if (!username || !password) {
+                errorEl.textContent = 'Veuillez remplir tous les champs';
+                errorEl.classList.add('visible');
+                return;
+            }
+
+            const user = usersDB.find(u => u.username === username && u.password === password);
+            if (!user) {
+                errorEl.textContent = 'Identifiants incorrects. Vérifiez votre nom d\'utilisateur et mot de passe.';
+                errorEl.classList.add('visible');
+                document.getElementById('login-password').value = '';
+                return;
+            }
+
+            errorEl.classList.remove('visible');
+            currentUser = { username: user.username, role: user.role };
+            saveSession(currentUser);
+            enterApp();
+        }
+
+        // ---- LOGOUT ----
+        function doLogout() {
+            currentUser = null;
+            clearSession();
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('login-username').value = '';
+            document.getElementById('login-password').value = '';
+            // Close sidebar
+            document.getElementById('sidebar').classList.add('collapsed');
+            document.getElementById('sidebar-overlay').classList.remove('visible');
+            document.getElementById('app-layout').classList.add('full-width');
+        }
+
+        // ---- REGISTER ----
+        function showRegisterFromLogin() {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('register-form').classList.add('visible');
+            document.getElementById('register-error').classList.remove('visible');
+        }
+
+        function showLoginFromRegister() {
+            document.getElementById('register-form').classList.remove('visible');
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('login-error').classList.remove('visible');
+        }
+
+        function doRegister() {
+            const username = document.getElementById('reg-username').value.trim();
+            const password = document.getElementById('reg-password').value;
+            const confirm = document.getElementById('reg-password-confirm').value;
+            const errorEl = document.getElementById('register-error');
+
+            if (!username || !password || !confirm) {
+                errorEl.textContent = 'Veuillez remplir tous les champs';
+                errorEl.classList.add('visible');
+                return;
+            }
+            if (username.length < 3) {
+                errorEl.textContent = 'Le nom d\'utilisateur doit faire au moins 3 caractères';
+                errorEl.classList.add('visible');
+                return;
+            }
+            if (password.length < 4) {
+                errorEl.textContent = 'Le mot de passe doit faire au moins 4 caractères';
+                errorEl.classList.add('visible');
+                return;
+            }
+            if (password !== confirm) {
+                errorEl.textContent = 'Les mots de passe ne correspondent pas';
+                errorEl.classList.add('visible');
+                return;
+            }
+            if (usersDB.find(u => u.username.toLowerCase() === username.toLowerCase())) {
+                errorEl.textContent = 'Ce nom d\'utilisateur est déjà pris';
+                errorEl.classList.add('visible');
+                return;
+            }
+
+            const newUser = {
+                username: username,
+                password: password,
+                role: 'viewer', // New users are viewers by default
+                createdAt: new Date().toISOString()
+            };
+            usersDB.push(newUser);
+            saveUsers();
+
+            errorEl.classList.remove('visible');
+            showToast('Compte créé avec succès ! Connectez-vous.');
+            showLoginFromRegister();
+        }
+
+        // ---- ENTER APP ----
+        function enterApp() {
+            document.getElementById('login-screen').classList.add('hidden');
+            updateUserUI();
+            applyRoleRestrictions();
+            switchModule('board');
+            renderBoard();
+            updateStats();
+        }
+
+        function updateUserUI() {
+            if (!currentUser) return;
+            const initial = currentUser.username.charAt(0).toUpperCase();
+
+            // Sidebar
+            const sidebarAvatar = document.getElementById('sidebar-avatar');
+            const sidebarUsername = document.getElementById('sidebar-username');
+            const sidebarRole = document.getElementById('sidebar-role');
+            if (sidebarAvatar) sidebarAvatar.textContent = initial;
+            if (sidebarUsername) sidebarUsername.textContent = currentUser.username;
+            if (sidebarRole) sidebarRole.textContent = ROLE_LABELS[currentUser.role] || currentUser.role;
+
+            // Toolbar
+            const toolbarAvatar = document.getElementById('toolbar-user-avatar');
+            const toolbarName = document.getElementById('toolbar-user-name');
+            if (toolbarAvatar) toolbarAvatar.textContent = initial;
+            if (toolbarName) toolbarName.textContent = currentUser.username;
+        }
+
+        function applyRoleRestrictions() {
+            // Hide admin-only sidebar items for non-admins
+            const adminItems = document.querySelectorAll('[data-module="admin"], [data-module="team"]');
+            adminItems.forEach(item => {
+                item.style.display = hasRole('admin') ? '' : 'none';
+            });
+
+            // Hide create/edit buttons for viewers
+            if (!hasPermission('create')) {
+                document.querySelectorAll('.add-card-btn, .btn:has-text("+ Colonne")').forEach(el => {
+                    el.style.display = 'none';
+                });
+            }
+        }
+
+        // ---- SIDEBAR ----
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const layout = document.getElementById('app-layout');
+            const isMobile = window.innerWidth <= 768;
+
+            if (sidebar.classList.contains('collapsed')) {
+                sidebar.classList.remove('collapsed');
+                if (isMobile) {
+                    overlay.classList.add('visible');
+                } else {
+                    layout.classList.remove('full-width');
+                }
+            } else {
+                sidebar.classList.add('collapsed');
+                overlay.classList.remove('visible');
+                if (!isMobile) {
+                    layout.classList.add('full-width');
+                }
+            }
+        }
+
+        // ---- MODULE SWITCHING ----
+        let currentModule = 'board';
+
+        function switchModule(moduleName) {
+            currentModule = moduleName;
+
+            // Hide all module contents
+            document.querySelectorAll('.module-content').forEach(el => el.classList.remove('active'));
+
+            // Get references to the main content areas
+            const header = document.querySelector('.header');
+            const boardContainer = document.querySelector('.board-container');
+            const calendarContainer = document.getElementById('calendar-container');
+            const globalTimerBar = document.getElementById('global-timer-bar');
+
+            // Always hide board/calendar/timer-bar initially
+            if (header) header.style.display = 'none';
+            if (boardContainer) boardContainer.style.display = 'none';
+            if (calendarContainer) calendarContainer.style.display = 'none';
+            if (globalTimerBar) globalTimerBar.style.display = 'none';
+
+            const moduleNames = {
+                board: 'Tableau de bord',
+                calendar: 'Calendrier',
+                timers: 'Chronomètres',
+                stats: 'Statistiques',
+                archives: 'Archives',
+                team: 'Équipe',
+                settings: 'Paramètres',
+                admin: 'Gestion utilisateurs'
+            };
+
+            // Update toolbar title
+            const toolbarTitle = document.getElementById('toolbar-title');
+            if (toolbarTitle) toolbarTitle.textContent = moduleNames[moduleName] || moduleName;
+
+            // Update sidebar active state
+            document.querySelectorAll('.sidebar-nav-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.module === moduleName);
+            });
+
+            // Update mobile tab bar active state
+            document.querySelectorAll('.mobile-tab-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.module === moduleName);
+            });
+
+            if (moduleName === 'board') {
+                if (header) header.style.display = '';
+                if (boardContainer) boardContainer.style.display = '';
+                currentView = 'board';
+                renderBoard();
+                updateStats();
+            } else if (moduleName === 'calendar') {
+                if (header) header.style.display = '';
+                if (calendarContainer) { calendarContainer.style.display = 'block'; calendarContainer.scrollTop = 0; }
+                currentView = 'calendar';
+                renderCalendar();
+                updateStats();
+            } else if (moduleName === 'timers') {
+                showTimersModule();
+            } else if (moduleName === 'stats') {
+                showStatsModule();
+            } else if (moduleName === 'archives') {
+                showArchivesModule();
+            } else if (moduleName === 'team') {
+                showTeamModule();
+            } else if (moduleName === 'admin') {
+                showAdminModule();
+            } else {
+                const el = document.getElementById('module-' + moduleName);
+                if (el) el.classList.add('active');
+            }
+
+            // Close sidebar on mobile after switching
+            if (window.innerWidth <= 768) {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebar-overlay');
+                if (sidebar) sidebar.classList.add('collapsed');
+                if (overlay) overlay.classList.remove('visible');
+            }
+        }
+
+        // ---- MODULE: TIMERS ----
+        function showTimersModule() {
+            const el = document.getElementById('module-timers');
+            el.classList.add('active');
+            const content = document.getElementById('timers-module-content');
+            const activeIds = Object.keys(activeTimers).filter(id => activeTimers[id]);
+            if (activeIds.length === 0) {
+                content.innerHTML = '<p style="font-size:15px;color:var(--ink-soft);">Aucun chronomètre en cours. Démarrez un timer depuis une carte du tableau.</p>';
+                return;
+            }
+            let html = '<div style="max-width:600px;margin:0 auto;text-align:left;">';
+            activeIds.forEach(cardId => {
+                const card = state.cards.find(c => c.id === parseInt(cardId));
+                if (!card) return;
+                const elapsed = getTimerElapsed(parseInt(cardId));
+                const running = isTimerRunning(parseInt(cardId));
+                const paused = isTimerPaused(parseInt(cardId));
+                html += `<div style="padding:var(--space-4);background:#FAFAF7;border:1px solid var(--line);border-radius:var(--radius-lg);margin-bottom:var(--space-3);display:flex;align-items:center;gap:var(--space-3);">
+                    <div style="flex:1;">
+                        <div style="font-weight:600;font-size:15px;">${escapeHtml(card.title)}</div>
+                        <div style="font-size:13px;color:var(--ink-soft);margin-top:2px;">${formatTime(elapsed)} ${running ? '🟢 En cours' : paused ? '🟡 En pause' : ''}</div>
+                    </div>
+                    <button class="btn btn-danger" onclick="stopTimer(${cardId})" style="font-size:13px;padding:8px 14px;">Arrêter</button>
+                </div>`;
+            });
+            html += '</div>';
+            content.innerHTML = html;
+        }
+
+        // ---- MODULE: STATS ----
+        function showStatsModule() {
+            const el = document.getElementById('module-stats');
+            el.classList.add('active');
+            const completedCol = findColumnByRole('completed');
+            const tomorrowCol = findColumnByRole('tomorrow');
+            const todayCol = findColumnByRole('today');
+            const completed = completedCol ? state.cards.filter(c => c.columnId === completedCol.id).length : 0;
+            const progress = tomorrowCol ? state.cards.filter(c => c.columnId === tomorrowCol.id).length : 0;
+            const total = state.cards.length;
+            let overdue = 0;
+            let totalTime = 0;
+            state.cards.forEach(card => {
+                const col = state.columns.find(c => c.id === card.columnId);
+                if (!isCompletedColumn(col) && getDeadlineStatus(card.deadline, card.scheduledTime) === 'overdue') overdue++;
+                totalTime += card.totalTimeSpent || 0;
+            });
+            const modCompleted = document.getElementById('mod-stat-completed');
+            const modProgress = document.getElementById('mod-stat-progress');
+            const modOverdue = document.getElementById('mod-stat-overdue');
+            const modTotal = document.getElementById('mod-stat-total');
+            const modTime = document.getElementById('mod-stat-time');
+            if (modCompleted) modCompleted.textContent = completed;
+            if (modProgress) modProgress.textContent = progress;
+            if (modOverdue) modOverdue.textContent = overdue;
+            if (modTotal) modTotal.textContent = total;
+            if (modTime) modTime.textContent = formatTime(totalTime);
+        }
+
+        // ---- MODULE: ARCHIVES ----
+        function showArchivesModule() {
+            const el = document.getElementById('module-archives');
+            el.classList.add('active');
+            const content = document.getElementById('archives-module-content');
+            if (archive.length === 0) {
+                content.innerHTML = '<div class="module-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/></svg><h3>Archives</h3><p>Aucune archive pour le moment. Clôturez une journée pour créer des archives.</p></div>';
+                return;
+            }
+            let html = '<div style="max-width:600px;margin:0 auto;padding:var(--space-4) 0;text-align:left;">';
+            html += '<h3 style="font-family:Playfair Display,serif;font-size:20px;margin-bottom:var(--space-4);">Historique des journées</h3>';
+            archive.forEach(day => {
+                html += `<div class="archive-day"><div class="archive-date">${escapeHtml(day.date)}</div><div class="archive-stats"><span>${day.completed} terminées</span><span>${day.total} total</span><span>${day.total > 0 ? Math.round((day.completed / day.total) * 100) : 0}%</span></div></div>`;
+            });
+            html += '</div>';
+            content.innerHTML = html;
+        }
+
+        // ---- MODULE: TEAM ----
+        function showTeamModule() {
+            const el = document.getElementById('module-team');
+            el.classList.add('active');
+            const content = document.getElementById('team-module-content');
+            if (!hasRole('admin')) {
+                content.innerHTML = '<div class="module-placeholder"><h3>Accès refusé</h3><p>Seuls les administrateurs peuvent gérer l\'équipe.</p></div>';
+                return;
+            }
+            let html = '<div style="max-width:600px;margin:0 auto;padding:var(--space-4) 0;text-align:left;">';
+            html += '<h3 style="font-family:Playfair Display,serif;font-size:20px;margin-bottom:var(--space-4);">Membres de l\'équipe</h3>';
+            html += '<div style="display:flex;flex-direction:column;gap:var(--space-3);">';
+            usersDB.forEach(u => {
+                const initial = u.username.charAt(0).toUpperCase();
+                html += `<div style="display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);background:#FAFAF7;border:1px solid var(--line);border-radius:var(--radius-lg);">
+                    <div class="sidebar-avatar" style="width:40px;height:40px;font-size:16px;">${initial}</div>
+                    <div style="flex:1;"><div style="font-weight:600;font-size:15px;">${escapeHtml(u.username)}</div><div style="font-size:12px;color:var(--ink-soft);">Membre depuis ${u.createdAt ? new Date(u.createdAt).toLocaleDateString('fr-FR') : '—'}</div></div>
+                    <span class="role-badge ${u.role}">${ROLE_LABELS[u.role] || u.role}</span>
+                </div>`;
+            });
+            html += '</div></div>';
+            content.innerHTML = html;
+            // Update badge
+            const badge = document.getElementById('team-count-badge');
+            if (badge) badge.textContent = usersDB.length;
+        }
+
+        // ---- MODULE: ADMIN (User Management) ----
+        function showAdminModule() {
+            const el = document.getElementById('module-admin');
+            el.classList.add('active');
+            const content = document.getElementById('admin-module-content');
+            if (!hasRole('admin')) {
+                content.innerHTML = '<div class="module-placeholder"><h3>Accès refusé</h3><p>Seuls les administrateurs ont accès à cette section.</p></div>';
+                return;
+            }
+            let html = '<div style="max-width:700px;margin:0 auto;padding:var(--space-4) 0;text-align:left;">';
+            html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);">';
+            html += '<h3 style="font-family:Playfair Display,serif;font-size:20px;">Gestion des utilisateurs</h3>';
+            html += '<button class="btn btn-primary" onclick="showAddUserModal()">+ Utilisateur</button>';
+            html += '</div>';
+            html += '<table class="users-table"><thead><tr><th>Utilisateur</th><th>Rôle</th><th>Créé le</th><th>Actions</th></tr></thead><tbody>';
+            usersDB.forEach((u, i) => {
+                html += `<tr>
+                    <td style="font-weight:600;">${escapeHtml(u.username)}</td>
+                    <td><span class="role-badge ${u.role}">${ROLE_LABELS[u.role] || u.role}</span></td>
+                    <td style="color:var(--ink-soft);font-size:13px;">${u.createdAt ? new Date(u.createdAt).toLocaleDateString('fr-FR') : '—'}</td>
+                    <td>
+                        <select onchange="changeUserRole(${i}, this.value)" style="padding:4px 8px;border:1px solid var(--line);border-radius:var(--radius-sm);font-size:13px;background:var(--bg-alt);color:var(--ink);">
+                            <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>Admin</option>
+                            <option value="editor" ${u.role === 'editor' ? 'selected' : ''}>Éditeur</option>
+                            <option value="viewer" ${u.role === 'viewer' ? 'selected' : ''}>Lecteur</option>
+                        </select>
+                        ${u.username !== 'admin' ? `<button class="btn btn-danger" onclick="deleteUser(${i})" style="font-size:12px;padding:4px 10px;margin-left:6px;">Supprimer</button>` : ''}
+                    </td>
+                </tr>`;
+            });
+            html += '</tbody></table></div>';
+            content.innerHTML = html;
+        }
+
+        function changeUserRole(index, newRole) {
+            if (usersDB[index]) {
+                usersDB[index].role = newRole;
+                saveUsers();
+                showToast('Rôle mis à jour');
+                showAdminModule();
+            }
+        }
+
+        function deleteUser(index) {
+            if (usersDB[index] && usersDB[index].username !== 'admin') {
+                if (!confirm('Supprimer cet utilisateur ?')) return;
+                usersDB.splice(index, 1);
+                saveUsers();
+                showToast('Utilisateur supprimé');
+                showAdminModule();
+            }
+        }
+
+        function showAddUserModal() {
+            const modal = createModal('Ajouter un utilisateur', `
+                <div class="form-group">
+                    <label class="form-label-v2">Nom d'utilisateur</label>
+                    <input type="text" class="form-input" id="new-user-name" placeholder="Identifiant">
+                </div>
+                <div class="form-group">
+                    <label class="form-label-v2">Mot de passe</label>
+                    <input type="password" class="form-input" id="new-user-pass" placeholder="Mot de passe">
+                </div>
+                <div class="form-group">
+                    <label class="form-label-v2">Rôle</label>
+                    <select class="form-input" id="new-user-role">
+                        <option value="viewer">Lecteur</option>
+                        <option value="editor">Éditeur</option>
+                        <option value="admin">Administrateur</option>
+                    </select>
+                </div>
+            `, [
+                { text: 'Annuler', class: 'btn-secondary', onclick: 'closeModal()' },
+                { text: 'Créer', class: 'btn-primary', onclick: 'addNewUser()' }
+            ]);
+            document.body.appendChild(modal);
+        }
+
+        function addNewUser() {
+            const name = document.getElementById('new-user-name').value.trim();
+            const pass = document.getElementById('new-user-pass').value;
+            const role = document.getElementById('new-user-role').value;
+            if (!name || !pass) { showToast('Veuillez remplir tous les champs'); return; }
+            if (usersDB.find(u => u.username.toLowerCase() === name.toLowerCase())) { showToast('Ce nom existe déjà'); return; }
+            usersDB.push({ username: name, password: pass, role: role, createdAt: new Date().toISOString() });
+            saveUsers();
+            closeModal();
+            showToast('Utilisateur créé');
+            showAdminModule();
+        }
+
+        function changePassword() {
+            const newPass = document.getElementById('settings-new-password').value;
+            if (!newPass || newPass.length < 4) {
+                showToast('Le mot de passe doit faire au moins 4 caractères');
+                return;
+            }
+            const user = usersDB.find(u => u.username === currentUser.username);
+            if (user) {
+                user.password = newPass;
+                saveUsers();
+                document.getElementById('settings-new-password').value = '';
+                showToast('Mot de passe modifié');
+            }
+        }
+
+        function toggleUserMenu() {
+            // Simple: toggle sidebar on desktop, show a quick action on mobile
+            if (window.innerWidth <= 768) {
+                if (confirm('Se déconnecter ?')) doLogout();
+            } else {
+                toggleSidebar();
+            }
+        }
+
+        // ---- ENTER KEY on login ----
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const loginScreen = document.getElementById('login-screen');
+                if (loginScreen && !loginScreen.classList.contains('hidden')) {
+                    const loginForm = document.getElementById('login-form');
+                    if (loginForm && !loginForm.classList.contains('hidden')) {
+                        doLogin();
+                    } else {
+                        doRegister();
+                    }
+                }
+            }
+        });
+
+        // ---- INIT: check session on load ----
+        function authInit() {
+            loadUsers();
+            const session = loadSession();
+            if (session) {
+                const user = usersDB.find(u => u.username === session.username);
+                if (user) {
+                    currentUser = { username: user.username, role: user.role };
+                    enterApp();
+                    return;
+                }
+            }
+            // No valid session — show login
+            document.getElementById('login-screen').classList.remove('hidden');
+        }
+
         // =========== START APP ============
+        authInit();
         init();
     </script>
 </body>
